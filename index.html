@@ -333,15 +333,20 @@
         .sidebar {
             background: rgba(15, 20, 25, 0.95);
             border-right: 1px solid rgba(255, 255, 255, 0.05);
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            z-index: 100;
         }
 
         .sidebar-icon {
-            width: 50px;
-            height: 50px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 12px;
+            border-radius: 8px;
             transition: all 0.2s ease;
             cursor: pointer;
         }
@@ -411,6 +416,330 @@
         .scrollbar-thin::-webkit-scrollbar-thumb:hover {
             background: rgba(96, 165, 250, 0.5);
         }
+
+        /* Settings Page Styles */
+        .settings-page {
+            display: none;
+        }
+
+        .settings-page.active {
+            display: block;
+        }
+
+        .dashboard-page.active {
+            display: block;
+        }
+
+        .dashboard-page {
+            display: none;
+        }
+
+        .settings-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .settings-header i {
+            color: #10b981;
+            font-size: 32px;
+        }
+
+        .settings-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .settings-card {
+            background: rgba(30, 35, 45, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .settings-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .settings-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .settings-card-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .settings-card-icon.logout {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+
+        .settings-card-icon.delete {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .settings-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .settings-card p {
+            color: #9ca3af;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn-delete:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Followers/Following Page Styles */
+        .followers-page {
+            display: none;
+        }
+
+        .followers-page.active {
+            display: block;
+        }
+
+        .followers-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .followers-header i {
+            color: #10b981;
+            font-size: 32px;
+        }
+
+        .followers-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .followers-tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 24px;
+        }
+
+        .followers-tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            color: #9ca3af;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .followers-tab.active {
+            color: #60a5fa;
+        }
+
+        .followers-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #60a5fa, #3b82f6);
+        }
+
+        .followers-tab:hover {
+            color: #93c5fd;
+        }
+
+        .followers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 16px;
+        }
+
+        .follower-card {
+            background: rgba(30, 35, 45, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .follower-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(102, 192, 244, 0.1),
+                transparent
+            );
+            transition: left 0.5s;
+        }
+
+        .follower-card:hover::after {
+            left: 100%;
+        }
+
+        .follower-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(96, 165, 250, 0.3);
+            box-shadow: 0 8px 20px rgba(96, 165, 250, 0.15);
+        }
+
+        .follower-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            border: 2px solid rgba(96, 165, 250, 0.3);
+            object-fit: cover;
+        }
+
+        .follower-name {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .follower-username {
+            color: #9ca3af;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .btn-follow {
+            background: transparent;
+            color: #60a5fa;
+            border: 1px solid #60a5fa;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            width: 100%;
+        }
+
+        .btn-follow:hover {
+            background: #60a5fa;
+            color: white;
+        }
+
+        .btn-follow.following {
+            background: rgba(96, 165, 250, 0.2);
+            color: #60a5fa;
+            border-color: #60a5fa;
+        }
+
+        .btn-follow.following:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .btn-follow.following:hover::after {
+            content: 'Deixar de seguir';
+        }
+
+        .btn-follow.following::after {
+            content: 'Seguindo';
+        }
+
+        .search-box {
+            margin-bottom: 24px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(30, 35, 45, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px 20px;
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: rgba(96, 165, 250, 0.5);
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: #6b7280;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="text-gray-100">
@@ -423,23 +752,27 @@
         <div class="prisma-core"></div>
     </div>
 
-    <div class="content-layer flex min-h-screen">
-        <!-- Sidebar -->
-        <div class="sidebar w-20 flex flex-col items-center py-6 space-y-6">
-            <div class="sidebar-icon active">
-                <i class="fas fa-gamepad text-blue-400 text-xl"></i>
-            </div>
-            <div class="sidebar-icon">
-                <i class="fas fa-user text-gray-400 text-xl"></i>
-            </div>
-            <div class="mt-auto sidebar-icon">
-                <i class="fas fa-cog text-gray-400 text-xl"></i>
-            </div>
+    <!-- Sidebar -->
+    <div class="sidebar w-14 flex flex-col items-center py-4 space-y-3">
+        <div class="sidebar-icon active" data-page="dashboard">
+            <i class="fas fa-gamepad text-blue-400"></i>
         </div>
+        <div class="sidebar-icon" data-page="followers">
+            <i class="fas fa-user text-gray-400"></i>
+        </div>
+        <div class="flex-1"></div>
+        <div class="sidebar-icon" data-page="settings">
+            <i class="fas fa-cog text-gray-400"></i>
+        </div>
+    </div>
 
+    <div class="content-layer min-h-screen">
         <!-- Main Content -->
-        <div class="flex-1 p-8 overflow-y-auto scrollbar-thin">
+        <div class="ml-14 p-6 overflow-y-auto scrollbar-thin">
             <div class="max-w-7xl mx-auto">
+                
+                <!-- Dashboard Page -->
+                <div class="dashboard-page active">
                 <!-- Top Section -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                     <!-- Profile Card -->
@@ -758,8 +1091,249 @@
                     </div>
                 </div>
             </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div class="settings-page">
+                <div class="settings-header">
+                    <i class="fas fa-cog"></i>
+                    <h1>Configurações</h1>
+                </div>
+
+                <!-- Logout Card -->
+                <div class="settings-card">
+                    <div class="settings-card-header">
+                        <div class="settings-card-icon logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </div>
+                        <h3>Deslogar conta</h3>
+                    </div>
+                    <p>Encerre sua sessão em todos os dispositivos conectados. Você precisará fazer login novamente.</p>
+                    <button class="btn-logout">Sair</button>
+                </div>
+
+                <!-- Delete Account Card -->
+                <div class="settings-card">
+                    <div class="settings-card-header">
+                        <div class="settings-card-icon delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </div>
+                        <h3>Excluir conta permanentemente</h3>
+                    </div>
+                    <p>Esta ação é irreversível. Todos os seus dados, conquistas e progresso serão apagados desta plataforma.</p>
+                    <button class="btn-delete">Excluir</button>
+                </div>
+            </div>
+
+            <!-- Followers/Following Page -->
+            <div class="followers-page">
+                <div class="followers-header">
+                    <i class="fas fa-users"></i>
+                    <h1>Seguidores (12)</h1>
+                </div>
+
+                <!-- Tabs -->
+                <div class="followers-tabs">
+                    <button class="followers-tab active" data-tab="seguidores">Seguidores</button>
+                    <button class="followers-tab" data-tab="seguindo">Seguindo</button>
+                    <button class="followers-tab" data-tab="pesquisar">Pesquisar</button>
+                </div>
+
+                <!-- Seguidores Tab Content -->
+                <div class="tab-content active" id="seguidores">
+                    <div class="followers-grid">
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Cypher" alt="Cypher Blade" class="follower-avatar">
+                            <div class="follower-name">Cypher Blade</div>
+                            <div class="follower-username">@cipher.pro</div>
+                            <button class="btn-follow following"></button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Mystic" alt="MysticShadow" class="follower-avatar">
+                            <div class="follower-name">MysticShadow</div>
+                            <div class="follower-username">@shadow.caster</div>
+                            <button class="btn-follow">Seguir</button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nova" alt="Nova Burst" class="follower-avatar">
+                            <div class="follower-name">Nova Burst</div>
+                            <div class="follower-username">@nova.star</div>
+                            <button class="btn-follow following"></button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Pyro" alt="PyroPhoenix" class="follower-avatar">
+                            <div class="follower-name">PyroPhoenix</div>
+                            <div class="follower-username">@phoenix.ignite</div>
+                            <button class="btn-follow">Seguir</button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Galactic" alt="GalacticHunter" class="follower-avatar">
+                            <div class="follower-name">GalacticHunter</div>
+                            <div class="follower-username">@star.chaser</div>
+                            <button class="btn-follow">Seguir</button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Tech" alt="Tech Sorcerer" class="follower-avatar">
+                            <div class="follower-name">Tech Sorcerer</div>
+                            <div class="follower-username">@code.mage</div>
+                            <button class="btn-follow following"></button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aqua" alt="AquaDiva" class="follower-avatar">
+                            <div class="follower-name">AquaDiva</div>
+                            <div class="follower-username">@ocean.song</div>
+                            <button class="btn-follow">Seguir</button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Grim" alt="GrimReaper" class="follower-avatar">
+                            <div class="follower-name">GrimReaper</div>
+                            <div class="follower-username">@dark.harvester</div>
+                            <button class="btn-follow">Seguir</button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Pixel" alt="PixelPrincess" class="follower-avatar">
+                            <div class="follower-name">PixelPrincess</div>
+                            <div class="follower-username">@8bit.queen</div>
+                            <button class="btn-follow following"></button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Voltage" alt="VoltageWarrior" class="follower-avatar">
+                            <div class="follower-name">VoltageWarrior</div>
+                            <div class="follower-username">@shock.wave</div>
+                            <button class="btn-follow">Seguir</button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Crimson" alt="CrimsonValkyrie" class="follower-avatar">
+                            <div class="follower-name">CrimsonValkyrie</div>
+                            <div class="follower-username">@blood.wing</div>
+                            <button class="btn-follow following"></button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Chrono" alt="ChronoSage" class="follower-avatar">
+                            <div class="follower-name">ChronoSage</div>
+                            <div class="follower-username">@time.bender</div>
+                            <button class="btn-follow">Seguir</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seguindo Tab Content -->
+                <div class="tab-content" id="seguindo">
+                    <div class="followers-grid">
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Cypher" alt="Cypher Blade" class="follower-avatar">
+                            <div class="follower-name">Cypher Blade</div>
+                            <div class="follower-username">@cipher.pro</div>
+                            <button class="btn-follow following"></button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nova" alt="Nova Burst" class="follower-avatar">
+                            <div class="follower-name">Nova Burst</div>
+                            <div class="follower-username">@nova.star</div>
+                            <button class="btn-follow following"></button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Tech" alt="Tech Sorcerer" class="follower-avatar">
+                            <div class="follower-name">Tech Sorcerer</div>
+                            <div class="follower-username">@code.mage</div>
+                            <button class="btn-follow following"></button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Pixel" alt="PixelPrincess" class="follower-avatar">
+                            <div class="follower-name">PixelPrincess</div>
+                            <div class="follower-username">@8bit.queen</div>
+                            <button class="btn-follow following"></button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Crimson" alt="CrimsonValkyrie" class="follower-avatar">
+                            <div class="follower-name">CrimsonValkyrie</div>
+                            <div class="follower-username">@blood.wing</div>
+                            <button class="btn-follow following"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pesquisar Tab Content -->
+                <div class="tab-content" id="pesquisar">
+                    <div class="search-box">
+                        <input type="text" class="search-input" placeholder="Pesquisar usuários...">
+                    </div>
+                    <div class="followers-grid">
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Shadow" alt="ShadowNinja" class="follower-avatar">
+                            <div class="follower-name">ShadowNinja</div>
+                            <div class="follower-username">@shadow.stealth</div>
+                            <button class="btn-follow">Seguir</button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Frost" alt="FrostByte" class="follower-avatar">
+                            <div class="follower-name">FrostByte</div>
+                            <div class="follower-username">@frost.core</div>
+                            <button class="btn-follow">Seguir</button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Thunder" alt="ThunderStrike" class="follower-avatar">
+                            <div class="follower-name">ThunderStrike</div>
+                            <div class="follower-username">@thunder.bolt</div>
+                            <button class="btn-follow">Seguir</button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Luna" alt="LunarEclipse" class="follower-avatar">
+                            <div class="follower-name">LunarEclipse</div>
+                            <div class="follower-username">@moon.shadow</div>
+                            <button class="btn-follow">Seguir</button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Venom" alt="VenomViper" class="follower-avatar">
+                            <div class="follower-name">VenomViper</div>
+                            <div class="follower-username">@toxic.fang</div>
+                            <button class="btn-follow">Seguir</button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Blaze" alt="BlazeRunner" class="follower-avatar">
+                            <div class="follower-name">BlazeRunner</div>
+                            <div class="follower-username">@fire.dash</div>
+                            <button class="btn-follow">Seguir</button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Neon" alt="NeonGhost" class="follower-avatar">
+                            <div class="follower-name">NeonGhost</div>
+                            <div class="follower-username">@neon.specter</div>
+                            <button class="btn-follow">Seguir</button>
+                        </div>
+
+                        <div class="follower-card">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Storm" alt="StormBreaker" class="follower-avatar">
+                            <div class="follower-name">StormBreaker</div>
+                            <div class="follower-username">@storm.fury</div>
+                            <button class="btn-follow">Seguir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </div>
     </div>
 
     <script>
@@ -843,6 +1417,137 @@
                 });
             });
         });
+
+        // Sidebar navigation
+        const sidebarIcons = document.querySelectorAll('.sidebar-icon');
+        const pages = {
+            dashboard: document.querySelector('.dashboard-page'),
+            settings: document.querySelector('.settings-page'),
+            followers: document.querySelector('.followers-page')
+        };
+
+        sidebarIcons.forEach(icon => {
+            icon.addEventListener('click', function() {
+                const page = this.getAttribute('data-page');
+                
+                if (page && pages[page]) {
+                    // Remove active from all icons
+                    sidebarIcons.forEach(i => i.classList.remove('active'));
+                    
+                    // Add active to clicked icon
+                    this.classList.add('active');
+                    
+                    // Hide all pages
+                    Object.values(pages).forEach(p => p.classList.remove('active'));
+                    
+                    // Show selected page
+                    pages[page].classList.add('active');
+                    
+                    // Update icon colors
+                    sidebarIcons.forEach(i => {
+                        const iconElement = i.querySelector('i');
+                        if (i.classList.contains('active')) {
+                            iconElement.classList.remove('text-gray-400');
+                            iconElement.classList.add('text-blue-400');
+                        } else {
+                            iconElement.classList.remove('text-blue-400');
+                            iconElement.classList.add('text-gray-400');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Logout button functionality
+        const logoutBtn = document.querySelector('.btn-logout');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', function() {
+                if (confirm('Tem certeza que deseja sair?')) {
+                    alert('Logout realizado com sucesso!');
+                    // Aqui você adicionaria a lógica real de logout
+                }
+            });
+        }
+
+        // Delete account button functionality
+        const deleteBtn = document.querySelector('.btn-delete');
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', function() {
+                const confirmMsg = 'ATENÇÃO: Esta ação é irreversível!\n\nTodos os seus dados, conquistas e progresso serão permanentemente apagados.\n\nDigite "EXCLUIR" para confirmar:';
+                const userInput = prompt(confirmMsg);
+                
+                if (userInput === 'EXCLUIR') {
+                    alert('Conta excluída com sucesso. Você será redirecionado.');
+                    // Aqui você adicionaria a lógica real de exclusão
+                } else if (userInput !== null) {
+                    alert('Confirmação incorreta. A conta não foi excluída.');
+                }
+            });
+        }
+
+        // Followers tabs functionality
+        const followersTabs = document.querySelectorAll('.followers-tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        followersTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabName = this.getAttribute('data-tab');
+                
+                // Remove active from all tabs
+                followersTabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab contents
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Show selected tab content
+                const targetContent = document.getElementById(tabName);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                }
+
+                // Update page title based on tab
+                const followersHeader = document.querySelector('.followers-header h1');
+                if (followersHeader) {
+                    if (tabName === 'seguidores') {
+                        followersHeader.textContent = 'Seguidores (12)';
+                    } else if (tabName === 'seguindo') {
+                        followersHeader.textContent = 'Seguindo (5)';
+                    } else if (tabName === 'pesquisar') {
+                        followersHeader.textContent = 'Pesquisar Pessoas';
+                    }
+                }
+            });
+        });
+
+        // Follow/Unfollow button functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn-follow')) {
+                e.target.classList.toggle('following');
+            }
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const followerCards = document.querySelectorAll('#pesquisar .follower-card');
+                
+                followerCards.forEach(card => {
+                    const name = card.querySelector('.follower-name').textContent.toLowerCase();
+                    const username = card.querySelector('.follower-username').textContent.toLowerCase();
+                    
+                    if (name.includes(searchTerm) || username.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        }
 
         // View toggle functionality
         const viewButtons = document.querySelectorAll('.view-toggle button');
