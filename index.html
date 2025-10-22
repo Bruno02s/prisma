@@ -1901,82 +1901,119 @@
         }
 
         // Achievement Modal Functions
-        function openAchievementModal(element, e) {
+        window.openAchievementModal = function(element, e) {
+            console.log('openAchievementModal called', element);
             if (e) {
                 e.stopPropagation();
             }
-            const data = JSON.parse(element.getAttribute('data-achievement'));
-            const modal = document.getElementById('achievementModal');
             
-            document.getElementById('modalIcon').textContent = data.icon;
-            document.getElementById('modalTitle').textContent = data.name;
-            document.getElementById('modalGame').textContent = data.game;
-            document.getElementById('modalPercentage').textContent = data.percentage + '%';
-            
-            // Define a classe de raridade baseada na porcentagem
-            let rarityClass = 'rarity-common';
-            let rarityLabel = 'Comum';
-            
-            if (data.percentage >= 50) {
-                rarityClass = 'rarity-common';
-                rarityLabel = 'Comum';
-            } else if (data.percentage >= 20) {
-                rarityClass = 'rarity-uncommon';
-                rarityLabel = 'Incomum';
-            } else if (data.percentage >= 10) {
-                rarityClass = 'rarity-rare';
-                rarityLabel = 'Raro';
-            } else if (data.percentage >= 5) {
-                rarityClass = 'rarity-epic';
-                rarityLabel = 'Épico';
-            } else {
-                rarityClass = 'rarity-legendary';
-                rarityLabel = 'Lendário';
+            try {
+                const data = JSON.parse(element.getAttribute('data-achievement'));
+                const modal = document.getElementById('achievementModal');
+                
+                if (!modal) {
+                    console.error('Modal not found!');
+                    return;
+                }
+                
+                console.log('Modal element:', modal);
+                console.log('Achievement data:', data);
+                
+                const modalIcon = document.getElementById('modalIcon');
+                const modalTitle = document.getElementById('modalTitle');
+                const modalGame = document.getElementById('modalGame');
+                const modalRarity = document.getElementById('modalRarity');
+                const modalDescription = document.getElementById('modalDescription');
+                const modalImage = document.getElementById('modalImage');
+                
+                console.log('Modal elements found:', {modalIcon, modalTitle, modalGame, modalRarity, modalDescription, modalImage});
+                
+                if (!modalIcon || !modalTitle || !modalGame || !modalRarity || !modalDescription || !modalImage) {
+                    console.error('Some modal elements not found!');
+                    return;
+                }
+                
+                modalIcon.textContent = data.icon;
+                modalTitle.textContent = data.name;
+                modalGame.textContent = data.game;
+                
+                // Define a classe de raridade baseada na porcentagem
+                let rarityClass = 'rarity-common';
+                let rarityLabel = 'Comum';
+                
+                if (data.percentage >= 50) {
+                    rarityClass = 'rarity-common';
+                    rarityLabel = 'Comum';
+                } else if (data.percentage >= 20) {
+                    rarityClass = 'rarity-uncommon';
+                    rarityLabel = 'Incomum';
+                } else if (data.percentage >= 10) {
+                    rarityClass = 'rarity-rare';
+                    rarityLabel = 'Raro';
+                } else if (data.percentage >= 5) {
+                    rarityClass = 'rarity-epic';
+                    rarityLabel = 'Épico';
+                } else {
+                    rarityClass = 'rarity-legendary';
+                    rarityLabel = 'Lendário';
+                }
+                
+                modalRarity.className = `rarity-badge ${rarityClass}`;
+                modalRarity.innerHTML = `<span>${rarityLabel}</span><span class="rarity-percentage">${data.percentage}%</span>`;
+                
+                modalDescription.textContent = data.description;
+                modalImage.src = data.image;
+                
+                console.log('Adding active class to modal');
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                console.log('Modal classes:', modal.className);
+            } catch (error) {
+                console.error('Error opening modal:', error);
             }
-            
-            const rarityBadge = document.getElementById('modalRarity');
-            rarityBadge.className = `rarity-badge ${rarityClass}`;
-            rarityBadge.innerHTML = `<span>${rarityLabel}</span><span class="rarity-percentage">${data.percentage}%</span>`;
-            
-            document.getElementById('modalDescription').textContent = data.description;
-            document.getElementById('modalImage').src = data.image;
-            
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
         }
 
-        function closeAchievementModal(e) {
+        window.closeAchievementModal = function(e) {
+            console.log('closeAchievementModal called');
             if (e) {
                 e.stopPropagation();
                 e.preventDefault();
             }
             const modal = document.getElementById('achievementModal');
             if (modal) {
+                console.log('Removing active class from modal');
                 modal.classList.remove('active');
                 document.body.style.overflow = '';
+                console.log('Modal classes after close:', modal.className);
             }
         }
 
         // Use event delegation on document for achievement cards
         document.addEventListener('click', function(e) {
+            console.log('Document click:', e.target);
+            
             // Check if clicked element or its parent is a pinned-achievement
             const achievementCard = e.target.closest('.pinned-achievement');
             if (achievementCard && achievementCard.hasAttribute('data-achievement')) {
+                console.log('Achievement card clicked!');
                 e.stopPropagation();
-                openAchievementModal(achievementCard, e);
+                e.preventDefault();
+                window.openAchievementModal(achievementCard, e);
                 return;
             }
 
             // Check if clicked on modal background
             if (e.target.id === 'achievementModal') {
-                closeAchievementModal(e);
+                console.log('Modal background clicked');
+                window.closeAchievementModal(e);
                 return;
             }
 
             // Check if clicked on close button or its child (icon)
             const closeButton = e.target.closest('.modal-close');
             if (closeButton) {
-                closeAchievementModal(e);
+                console.log('Close button clicked');
+                window.closeAchievementModal(e);
                 return;
             }
         });
@@ -1986,7 +2023,8 @@
             if (e.key === 'Escape') {
                 const modal = document.getElementById('achievementModal');
                 if (modal && modal.classList.contains('active')) {
-                    closeAchievementModal(e);
+                    console.log('ESC key pressed');
+                    window.closeAchievementModal(e);
                 }
             }
         });
