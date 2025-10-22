@@ -740,6 +740,288 @@
         .tab-content.active {
             display: block;
         }
+
+        /* Pinned Achievements Styles */
+        .pinned-achievements {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .pinned-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .pinned-achievements {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: visible;
+            position: relative;
+            z-index: 10;
+        }
+
+        .pinned-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .pinned-achievement {
+            background: rgba(96, 165, 250, 0.08);
+            border: 1px solid rgba(96, 165, 250, 0.15);
+            border-radius: 10px;
+            padding: 10px 8px;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pinned-achievement:hover {
+            background: rgba(96, 165, 250, 0.12);
+            border-color: rgba(96, 165, 250, 0.3);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 24px rgba(96, 165, 250, 0.15);
+        }
+
+        .achievement-icon {
+            font-size: 28px;
+            margin-bottom: 6px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+            flex-shrink: 0;
+        }
+
+        .achievement-name {
+            font-size: 10px;
+            font-weight: 600;
+            color: #e5e7eb;
+            line-height: 1.25;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            width: 100%;
+            padding: 0 4px;
+            word-break: break-word;
+        }
+
+        .achievement-game {
+            display: none;
+        }
+
+        /* Achievement Modal */
+        .achievement-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .achievement-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(30, 35, 45, 0.98);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 8px;
+            color: #9ca3af;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 20px;
+        }
+
+        .modal-close:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-icon {
+            font-size: 64px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .modal-title-section h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .modal-game {
+            font-size: 14px;
+            color: #60a5fa;
+            font-weight: 600;
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .modal-info-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-info-label {
+            font-size: 12px;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            min-width: 100px;
+        }
+
+        .modal-info-value {
+            font-size: 14px;
+            color: #e5e7eb;
+            font-weight: 500;
+        }
+
+        .rarity-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .rarity-common {
+            background: rgba(148, 163, 184, 0.2);
+            color: #cbd5e1;
+        }
+
+        .rarity-uncommon {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .rarity-rare {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .rarity-epic {
+            background: rgba(168, 85, 247, 0.2);
+            color: #a855f7;
+        }
+
+        .rarity-legendary {
+            background: rgba(234, 179, 8, 0.2);
+            color: #eab308;
+        }
+
+        .rarity-percentage {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .modal-description {
+            background: rgba(20, 25, 35, 0.6);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 8px;
+        }
+
+        .modal-description p {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #d1d5db;
+            margin: 0;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-top: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Tooltip - Remover */
+        .pinned-achievement[data-tooltip]::after {
+            display: none;
+        }
+
+        .pinned-achievements {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: visible;
+        }
+
+        .pinned-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            overflow: visible;
+        }
     </style>
 </head>
 <body class="text-gray-100">
@@ -790,6 +1072,35 @@
                                     <span class="level-badge">Nível 37</span>
                                 </div>
                                 <p class="text-gray-400 text-sm">Atualizado 1 minuto atrás</p>
+                            </div>
+                        </div>
+
+                        <!-- Pinned Achievements -->
+                        <div class="pinned-achievements">
+                            <div class="pinned-grid">
+                                <div class="pinned-achievement" data-achievement='{"name":"Conflito Intenso","game":"Far Cry 6","percentage":"45.2","rarity":"uncommon","description":"Complete 10 missões de conflito em áreas de alta tensão. Domine as bases inimigas sem ser detectado.","icon":"🎮","image":"https://images.unsplash.com/photo-1580234811497-9df7fd2f357e?w=500&h=300&fit=crop"}'>
+                                    <div class="achievement-icon">🎮</div>
+                                    <div class="achievement-name">Conflito Intenso</div>
+                                    <div class="achievement-game">Far Cry 6</div>
+                                </div>
+
+                                <div class="pinned-achievement" data-achievement='{"name":"Mochilão","game":"Far Cry 6","percentage":"78.5","rarity":"common","description":"Colete todos os itens de mochila espalhados pelo mapa. Aumente sua capacidade de carga ao máximo.","icon":"🎒","image":"https://images.unsplash.com/photo-1580234811497-9df7fd2f357e?w=500&h=300&fit=crop"}'>
+                                    <div class="achievement-icon">🎒</div>
+                                    <div class="achievement-name">Mochilão</div>
+                                    <div class="achievement-game">Far Cry 6</div>
+                                </div>
+
+                                <div class="pinned-achievement" data-achievement='{"name":"Até Não Sobrar Nenhum","game":"The Last of Us™ Parte II Remastered","percentage":"2.8","rarity":"legendary","description":"Elimine todos os inimigos em modo Realista+ sem morrer uma única vez. Uma conquista apenas para os verdadeiros mestres.","icon":"💀","image":"https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=500&h=300&fit=crop"}'>
+                                    <div class="achievement-icon">💀</div>
+                                    <div class="achievement-name">Até Não Sobrar Nenhum</div>
+                                    <div class="achievement-game">TLOU II Remastered</div>
+                                </div>
+
+                                <div class="pinned-achievement" data-achievement='{"name":"Platina","game":"God of War","percentage":"8.3","rarity":"epic","description":"Obtenha todas as conquistas do jogo. Complete todos os desafios de Muspelheim e Niflheim, e derrote todas as Valquírias.","icon":"🏆","image":"https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&h=300&fit=crop"}'>
+                                    <div class="achievement-icon">🏆</div>
+                                    <div class="achievement-name">Platina</div>
+                                    <div class="achievement-game">God of War</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1588,6 +1899,130 @@
                 });
             });
         }
+
+        // Achievement Modal Functions
+        function openAchievementModal(element, e) {
+            if (e) {
+                e.stopPropagation();
+            }
+            const data = JSON.parse(element.getAttribute('data-achievement'));
+            const modal = document.getElementById('achievementModal');
+            
+            document.getElementById('modalIcon').textContent = data.icon;
+            document.getElementById('modalTitle').textContent = data.name;
+            document.getElementById('modalGame').textContent = data.game;
+            document.getElementById('modalPercentage').textContent = data.percentage + '%';
+            
+            // Define a classe de raridade baseada na porcentagem
+            let rarityClass = 'rarity-common';
+            let rarityLabel = 'Comum';
+            
+            if (data.percentage >= 50) {
+                rarityClass = 'rarity-common';
+                rarityLabel = 'Comum';
+            } else if (data.percentage >= 20) {
+                rarityClass = 'rarity-uncommon';
+                rarityLabel = 'Incomum';
+            } else if (data.percentage >= 10) {
+                rarityClass = 'rarity-rare';
+                rarityLabel = 'Raro';
+            } else if (data.percentage >= 5) {
+                rarityClass = 'rarity-epic';
+                rarityLabel = 'Épico';
+            } else {
+                rarityClass = 'rarity-legendary';
+                rarityLabel = 'Lendário';
+            }
+            
+            const rarityBadge = document.getElementById('modalRarity');
+            rarityBadge.className = `rarity-badge ${rarityClass}`;
+            rarityBadge.innerHTML = `<span>${rarityLabel}</span><span class="rarity-percentage">${data.percentage}%</span>`;
+            
+            document.getElementById('modalDescription').textContent = data.description;
+            document.getElementById('modalImage').src = data.image;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAchievementModal(e) {
+            if (e) {
+                e.stopPropagation();
+                e.preventDefault();
+            }
+            const modal = document.getElementById('achievementModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Use event delegation on document for achievement cards
+        document.addEventListener('click', function(e) {
+            // Check if clicked element or its parent is a pinned-achievement
+            const achievementCard = e.target.closest('.pinned-achievement');
+            if (achievementCard && achievementCard.hasAttribute('data-achievement')) {
+                e.stopPropagation();
+                openAchievementModal(achievementCard, e);
+                return;
+            }
+
+            // Check if clicked on modal background
+            if (e.target.id === 'achievementModal') {
+                closeAchievementModal(e);
+                return;
+            }
+
+            // Check if clicked on close button or its child (icon)
+            const closeButton = e.target.closest('.modal-close');
+            if (closeButton) {
+                closeAchievementModal(e);
+                return;
+            }
+        });
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('achievementModal');
+                if (modal && modal.classList.contains('active')) {
+                    closeAchievementModal(e);
+                }
+            }
+        });
     </script>
+
+    <!-- Achievement Modal -->
+    <div id="achievementModal" class="achievement-modal">
+        <div class="modal-content">
+            <button class="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-header">
+                <div id="modalIcon" class="modal-icon">🏆</div>
+                <div class="modal-title-section">
+                    <h2 id="modalTitle">Nome da Conquista</h2>
+                    <div id="modalGame" class="modal-game">Nome do Jogo</div>
+                </div>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-info-row">
+                    <span class="modal-info-label">Raridade</span>
+                    <span id="modalRarity" class="rarity-badge rarity-common">
+                        <span>Comum</span>
+                        <span id="modalPercentage" class="rarity-percentage">50%</span>
+                    </span>
+                </div>
+                
+                <div class="modal-description">
+                    <p id="modalDescription">Descrição da conquista aparece aqui com todos os detalhes necessários.</p>
+                </div>
+                
+                <img id="modalImage" src="" alt="Game Screenshot" class="modal-image">
+            </div>
+        </div>
+    </div>
 </body>
 </html>
