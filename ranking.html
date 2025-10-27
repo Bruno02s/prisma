@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking - Prisma</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #0a0e14;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Prisma Background */
+        .prisma-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .light-beam {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            mix-blend-mode: screen;
+            filter: blur(60px);
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(20px, -20px) rotate(2deg); }
+            50% { transform: translate(-15px, 15px) rotate(-1deg); }
+            75% { transform: translate(15px, 10px) rotate(1deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .beam-playstation {
+            background: radial-gradient(ellipse at center, 
+                rgba(0, 112, 204, 0.25) 0%,
+                rgba(0, 112, 204, 0.15) 30%,
+                rgba(0, 112, 204, 0.05) 50%,
+                transparent 70%
+            );
+            top: -50%;
+            left: -20%;
+            animation: float 20s ease-in-out infinite, pulse 8s ease-in-out infinite;
+        }
+
+        .beam-steam {
+            background: radial-gradient(ellipse at center, 
+                rgba(102, 192, 244, 0.45) 0%,
+                rgba(102, 192, 244, 0.35) 25%,
+                rgba(102, 192, 244, 0.2) 45%,
+                rgba(102, 192, 244, 0.08) 60%,
+                transparent 75%
+            );
+            top: -60%;
+            right: -30%;
+            animation: float 25s ease-in-out infinite reverse, pulse 10s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+
+        .beam-xbox {
+            background: radial-gradient(ellipse at center, 
+                rgba(16, 124, 16, 0.2) 0%,
+                rgba(16, 124, 16, 0.12) 35%,
+                rgba(16, 124, 16, 0.04) 55%,
+                transparent 70%
+            );
+            bottom: -40%;
+            left: 10%;
+            animation: float 18s ease-in-out infinite, pulse 9s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: rgba(15, 20, 25, 0.95);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            z-index: 100;
+        }
+
+        .sidebar-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .sidebar-icon:hover {
+            background: rgba(96, 165, 250, 0.1);
+        }
+
+        .sidebar-icon.active {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Content */
+        .content-layer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .page-header {
+            background: rgba(30, 35, 45, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        /* Filters */
+        .filter-section {
+            background: rgba(30, 35, 45, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(20, 25, 35, 0.6);
+            color: #9ca3af;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: rgba(96, 165, 250, 0.3);
+            background: rgba(96, 165, 250, 0.1);
+            color: #60a5fa;
+        }
+
+        .filter-btn.active {
+            border-color: #60a5fa;
+            background: rgba(96, 165, 250, 0.2);
+            color: #60a5fa;
+        }
+
+        .search-input {
+            background: rgba(20, 25, 35, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px 16px 10px 40px;
+            color: #e5e7eb;
+            width: 100%;
+            max-width: 300px;
+            font-size: 14px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: rgba(96, 165, 250, 0.5);
+            background: rgba(20, 25, 35, 0.8);
+        }
+
+        /* Ranking Table */
+        .ranking-container {
+            background: rgba(30, 35, 45, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .ranking-table {
+            width: 100%;
+        }
+
+        .ranking-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .ranking-header th {
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0 12px;
+        }
+
+        .ranking-row {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .ranking-row:hover {
+            background: rgba(96, 165, 250, 0.05);
+        }
+
+        .ranking-row td {
+            padding: 16px 12px;
+        }
+
+        .position-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .position-1 {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #fff;
+        }
+
+        .position-2 {
+            background: linear-gradient(135deg, #d1d5db, #9ca3af);
+            color: #1f2937;
+        }
+
+        .position-3 {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: #fff;
+        }
+
+        .position-other {
+            background: rgba(96, 165, 250, 0.1);
+            color: #60a5fa;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .player-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .player-name {
+            font-weight: 600;
+            color: #e5e7eb;
+            font-size: 15px;
+        }
+
+        .platform-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 6px;
+        }
+
+        .platform-psn {
+            background: rgba(0, 112, 204, 0.2);
+            color: #0070CC;
+        }
+
+        .platform-steam {
+            background: rgba(102, 192, 244, 0.2);
+            color: #66c0f4;
+        }
+
+        .platform-xbox {
+            background: rgba(16, 124, 16, 0.2);
+            color: #107C10;
+        }
+
+        .platform-retro {
+            background: rgba(212, 160, 23, 0.2);
+            color: #D4A017;
+        }
+
+        .total-points {
+            font-weight: 700;
+            font-size: 16px;
+            color: #fbbf24;
+        }
+
+        .achievements-count {
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .ranking-header th:nth-child(3),
+            .ranking-row td:nth-child(3) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Prisma Background -->
+    <div class="prisma-background">
+        <div class="light-beam beam-playstation"></div>
+        <div class="light-beam beam-steam"></div>
+        <div class="light-beam beam-xbox"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar w-14 flex flex-col items-center py-4 space-y-3">
+        <div class="sidebar-icon" onclick="window.location.href='dashboard.html'">
+            <i class="fas fa-gamepad text-gray-400"></i>
+        </div>
+        <div class="sidebar-icon active">
+            <i class="fas fa-trophy text-blue-400"></i>
+        </div>
+        <div class="sidebar-icon" onclick="window.location.href='dashboard.html'">
+            <i class="fas fa-user text-gray-400"></i>
+        </div>
+        <div class="flex-1"></div>
+        <div class="sidebar-icon">
+            <i class="fas fa-cog text-gray-400"></i>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-layer min-h-screen">
+        <div class="ml-14 p-6">
+            <div class="max-w-7xl mx-auto">
+                
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-3xl font-bold text-white mb-2">Ranking Geral</h1>
+                            <p class="text-gray-400 text-sm">Competição entre você e as pessoas que você segue</p>
+                        </div>
+                        <button class="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg text-white text-sm font-semibold hover:shadow-lg transition-all">
+                            <i class="fas fa-sync-alt mr-2"></i>
+                            Atualizar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filter-section">
+                    <div class="flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm text-gray-400 mr-2">Filtros de Ranking</span>
+                            <button class="filter-btn active"><i class="fas fa-trophy mr-2"></i>Todas</button>
+                            <button class="filter-btn"><i class="fab fa-playstation mr-2"></i>PSN</button>
+                            <button class="filter-btn"><i class="fab fa-xbox mr-2"></i>XBOX</button>
+                            <button class="filter-btn"><i class="fab fa-steam mr-2"></i>STEAM</button>
+                            <button class="filter-btn"><i class="fas fa-gamepad mr-2"></i>RETRO ARCHVIMENTS</button>
+                        </div>
+                        <div class="relative">
+                            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                            <input type="text" class="search-input" placeholder="Buscar jogador...">
+                        </div>
+                        <button class="filter-btn">
+                            Período: <span class="text-blue-400 ml-1">Total</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Ranking Table -->
+                <div class="ranking-container">
+                    <h2 class="text-xl font-bold text-white mb-6">Top Jogadores</h2>
+                    
+                    <table class="ranking-table">
+                        <thead class="ranking-header">
+                            <tr>
+                                <th style="width: 80px;">Posição</th>
+                                <th>Jogador</th>
+                                <th>Plataformas</th>
+                                <th style="width: 120px;">Conquistas</th>
+                                <th style="width: 140px; text-align: right;">Pontos Totais</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Rank 1 -->
+                            <tr class="ranking-row">
+                                <td>
+                                    <div class="position-badge position-1">1º</div>
+                                </td>
+                                <td>
+                                    <div class="player-info">
+                                        <img src="https://i.pravatar.cc/150?img=12" alt="Avatar" class="player-avatar">
+                                        <span class="player-name">SombraNoturna88</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="platform-tag platform-psn"><i class="fab fa-playstation"></i> PSN</span>
+                                    <span class="platform-tag platform-steam"><i class="fab fa-steam"></i> STEAM</span>
+                                </td>
+                                <td><span class="achievements-count">1250</span></td>
+                                <td style="text-align: right;"><span class="total-points">987.654</span></td>
+                            </tr>
+
+                            <!-- Rank 2 -->
+                            <tr class="ranking-row">
+                                <td>
+                                    <div class="position-badge position-2">2º</div>
+                                </td>
+                                <td>
+                                    <div class="player-info">
+                                        <img src="https://i.pravatar.cc/150?img=33" alt="Avatar" class="player-avatar">
+                                        <span class="player-name">MestreArcanoX</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="platform-tag platform-xbox"><i class="fab fa-xbox"></i> XBOX</span>
+                                </td>
+                                <td><span class="achievements-count">1100</span></td>
+                                <td style="text-align: right;"><span class="total-points">954.321</span></td>
+                            </tr>
+
+                            <!-- Rank 3 -->
+                            <tr class="ranking-row">
+                                <td>
+                                    <div class="position-badge position-3">3º</div>
+                                </td>
+                                <td>
+                                    <div class="player-info">
+                                        <img src="https://i.pravatar.cc/150?img=27" alt="Avatar" class="player-avatar">
+                                        <span class="player-name">VikingGamerPT</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="platform-tag platform-steam"><i class="fab fa-steam"></i> STEAM</span>
+                                    <span class="platform-tag platform-retro"><i class="fas fa-gamepad"></i> RETRO ARCHVIMENTS</span>
+                                </td>
+                                <td><span class="achievements-count">980</span></td>
+                                <td style="text-align: right;"><span class="total-points">890.123</span></td>
+                            </tr>
+
+                            <!-- Rank 4 -->
+                            <tr class="ranking-row">
+                                <td>
+                                    <div class="position-badge position-other">4º</div>
+                                </td>
+                                <td>
+                                    <div class="player-info">
+                                        <img src="https://i.pravatar.cc/150?img=44" alt="Avatar" class="player-avatar">
+                                        <span class="player-name">LobaSolitária</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="platform-tag platform-psn"><i class="fab fa-playstation"></i> PSN</span>
+                                </td>
+                                <td><span class="achievements-count">870</span></td>
+                                <td style="text-align: right;"><span class="total-points">812.345</span></td>
+                            </tr>
+
+                            <!-- Rank 5 -->
+                            <tr class="ranking-row">
+                                <td>
+                                    <div class="position-badge position-other">5º</div>
+                                </td>
+                                <td>
+                                    <div class="player-info">
+                                        <img src="https://i.pravatar.cc/150?img=58" alt="Avatar" class="player-avatar">
+                                        <span class="player-name">ReiDoPixel</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="platform-tag platform-xbox"><i class="fab fa-xbox"></i> XBOX</span>
+                                    <span class="platform-tag platform-steam"><i class="fab fa-steam"></i> STEAM</span>
+                                </td>
+                                <td><span class="achievements-count">750</span></td>
+                                <td style="text-align: right;"><span class="total-points">765.432</span></td>
+                            </tr>
+
+                            <!-- Rank 6 -->
+                            <tr class="ranking-row">
+                                <td>
+                                    <div class="position-badge position-other">6º</div>
+                                </td>
+                                <td>
+                                    <div class="player-info">
+                                        <img src="https://i.pravatar.cc/150?img=15" alt="Avatar" class="player-avatar">
+                                        <span class="player-name">Draconis_Rex</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="platform-tag platform-psn"><i class="fab fa-playstation"></i> PSN</span>
+                                    <span class="platform-tag platform-xbox"><i class="fab fa-xbox"></i> XBOX</span>
+                                </td>
+                                <td><span class="achievements-count">630</span></td>
+                                <td style="text-align: right;"><span class="total-points">700.100</span></td>
+                            </tr>
+
+                            <!-- Rank 7 -->
+                            <tr class="ranking-row">
+                                <td>
+                                    <div class="position-badge position-other">7º</div>
+                                </td>
+                                <td>
+                                    <div class="player-info">
+                                        <img src="https://i.pravatar.cc/150?img=68" alt="Avatar" class="player-avatar">
+                                        <span class="player-name">FenixCinzento</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="platform-tag platform-steam"><i class="fab fa-steam"></i> STEAM</span>
+                                </td>
+                                <td><span class="achievements-count">500</span></td>
+                                <td style="text-align: right;"><span class="total-points">650.000</span></td>
+                            </tr>
+
+                            <!-- Rank 8 -->
+                            <tr class="ranking-row">
+                                <td>
+                                    <div class="position-badge position-other">8º</div>
+                                </td>
+                                <td>
+                                    <div class="player-info">
+                                        <img src="https://i.pravatar.cc/150?img=29" alt="Avatar" class="player-avatar">
+                                        <span class="player-name">EstrelaCadente</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="platform-tag platform-psn"><i class="fab fa-playstation"></i> PSN</span>
+                                </td>
+                                <td><span class="achievements-count">450</span></td>
+                                <td style="text-align: right;"><span class="total-points">600.000</span></td>
+                            </tr>
+
+                            <!-- Rank 9 -->
+                            <tr class="ranking-row">
+                                <td>
+                                    <div class="position-badge position-other">9º</div>
+                                </td>
+                                <td>
+                                    <div class="player-info">
+                                        <img src="https://i.pravatar.cc/150?img=52" alt="Avatar" class="player-avatar">
+                                        <span class="player-name">GuardiãoDaForça</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="platform-tag platform-xbox"><i class="fab fa-xbox"></i> XBOX</span>
+                                </td>
+                                <td><span class="achievements-count">400</span></td>
+                                <td style="text-align: right;"><span class="total-points">550.000</span></td>
+                            </tr>
+
+                            <!-- Rank 10 -->
+                            <tr class="ranking-row">
+                                <td>
+                                    <div class="position-badge position-other">10º</div>
+                                </td>
+                                <td>
+                                    <div class="player-info">
+                                        <img src="https://i.pravatar.cc/150?img=40" alt="Avatar" class="player-avatar">
+                                        <span class="player-name">Sombreiro88</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="platform-tag platform-psn"><i class="fab fa-playstation"></i> PSN</span>
+                                    <span class="platform-tag platform-retro"><i class="fas fa-gamepad"></i> RETRO ARCHVIMENTS</span>
+                                </td>
+                                <td><span class="achievements-count">350</span></td>
+                                <td style="text-align: right;"><span class="total-points">500.000</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-gray-500">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Recursos • Legal
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Filter buttons functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active from all buttons in the same group
+                const filterGroup = this.parentElement.querySelectorAll('.filter-btn');
+                filterGroup.forEach(b => b.classList.remove('active'));
+                
+                // Add active to clicked button
+                this.classList.add('active');
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll('.ranking-row');
+            
+            rows.forEach(row => {
+                const playerName = row.querySelector('.player-name').textContent.toLowerCase();
+                if (playerName.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1294,6 +1294,9 @@
         <div class="sidebar-icon active" data-page="dashboard">
             <i class="fas fa-gamepad text-blue-400"></i>
         </div>
+        <div class="sidebar-icon" data-page="ranking">
+            <i class="fas fa-trophy text-gray-400"></i>
+        </div>
         <div class="sidebar-icon" data-page="followers">
             <i class="fas fa-user text-gray-400"></i>
         </div>
@@ -2004,6 +2007,12 @@
         sidebarIcons.forEach(icon => {
             icon.addEventListener('click', function() {
                 const page = this.getAttribute('data-page');
+                
+                // Handle ranking page redirect
+                if (page === 'ranking') {
+                    window.location.href = 'ranking.html';
+                    return;
+                }
                 
                 if (page && pages[page]) {
                     // Remove active from all icons
