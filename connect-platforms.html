@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conectar Plataformas - Prisma</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f1419;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Prisma Background Effect */
+        .prisma-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .beam {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .beam-1 {
+            background: radial-gradient(circle, #0070CC 0%, transparent 70%);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .beam-2 {
+            background: radial-gradient(circle, #66c0f4 0%, transparent 70%);
+            top: 50%;
+            right: -200px;
+            animation-delay: 5s;
+        }
+
+        .beam-3 {
+            background: radial-gradient(circle, #3b82f6 0%, transparent 70%);
+            bottom: -200px;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(50px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-50px, 50px) scale(0.9);
+            }
+        }
+
+        /* Content */
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            padding: 60px 40px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 48px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 28px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: #9ca3af;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        /* Platform Grid */
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .platform-card {
+            background: rgba(30, 35, 45, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.3s ease;
+            animation: slideUp 0.6s ease;
+            animation-fill-mode: both;
+        }
+
+        .platform-card:nth-child(1) { animation-delay: 0.1s; }
+        .platform-card:nth-child(2) { animation-delay: 0.2s; }
+        .platform-card:nth-child(3) { animation-delay: 0.3s; }
+        .platform-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .platform-card:hover {
+            border-color: rgba(96, 165, 250, 0.3);
+            background: rgba(30, 35, 45, 0.8);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .platform-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .icon-steam {
+            background: linear-gradient(135deg, rgba(102, 192, 244, 0.2), rgba(102, 192, 244, 0.1));
+            color: #66c0f4;
+        }
+
+        .icon-playstation {
+            background: linear-gradient(135deg, rgba(0, 112, 204, 0.2), rgba(0, 112, 204, 0.1));
+            color: #0070CC;
+        }
+
+        .icon-xbox {
+            background: linear-gradient(135deg, rgba(16, 124, 16, 0.2), rgba(16, 124, 16, 0.1));
+            color: #107C10;
+        }
+
+        .icon-retro {
+            background: linear-gradient(135deg, rgba(212, 160, 23, 0.2), rgba(212, 160, 23, 0.1));
+            color: #D4A017;
+        }
+
+        .platform-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .platform-description {
+            font-size: 14px;
+            color: #9ca3af;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .connect-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .connect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .connect-btn:active {
+            transform: translateY(0);
+        }
+
+        .connect-btn.connected {
+            background: rgba(16, 185, 129, 0.2);
+            border: 2px solid #10b981;
+            color: #10b981;
+            cursor: default;
+        }
+
+        .connect-btn.connected:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .connect-btn i {
+            margin-right: 8px;
+        }
+
+        /* Info Section */
+        .info-section {
+            background: rgba(30, 35, 45, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 20px;
+            padding: 32px;
+            animation: fadeIn 0.8s ease 0.5s both;
+        }
+
+        .info-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .info-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .info-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-list li {
+            font-size: 14px;
+            color: #9ca3af;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+
+        .info-list li:before {
+            content: "•";
+            position: absolute;
+            left: 8px;
+            color: #60a5fa;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 40px 20px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .platforms-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .platform-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Prisma Background -->
+    <div class="prisma-bg">
+        <div class="beam beam-1"></div>
+        <div class="beam beam-2"></div>
+        <div class="beam beam-3"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="content-wrapper">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-icon">
+                <i class="fas fa-link"></i>
+            </div>
+            <h1>Vincular Conta</h1>
+            <p>Conecte suas contas de jogos para sincronizar estatísticas e conquistas</p>
+        </div>
+
+        <!-- Platforms Grid -->
+        <div class="platforms-grid">
+            <!-- Steam -->
+            <div class="platform-card">
+                <div class="platform-icon icon-steam">
+                    <i class="fab fa-steam"></i>
+                </div>
+                <h3 class="platform-name">Steam</h3>
+                <p class="platform-description">Vincule sua biblioteca Steam</p>
+                <button class="connect-btn" data-platform="steam" onclick="connectPlatform('steam', 'https://steamcommunity.com')">
+                    Conectar
+                </button>
+            </div>
+
+            <!-- PlayStation -->
+            <div class="platform-card">
+                <div class="platform-icon icon-playstation">
+                    <i class="fab fa-playstation"></i>
+                </div>
+                <h3 class="platform-name">PlayStation Network</h3>
+                <p class="platform-description">Conecte sua conta PSN</p>
+                <button class="connect-btn" data-platform="playstation" onclick="connectPlatform('playstation', 'https://www.playstation.com')">
+                    Conectar
+                </button>
+            </div>
+
+            <!-- Xbox -->
+            <div class="platform-card">
+                <div class="platform-icon icon-xbox">
+                    <i class="fab fa-xbox"></i>
+                </div>
+                <h3 class="platform-name">Xbox Live</h3>
+                <p class="platform-description">Conecte sua conta Xbox</p>
+                <button class="connect-btn" data-platform="xbox" onclick="connectPlatform('xbox', 'https://www.xbox.com')">
+                    Conectar
+                </button>
+            </div>
+
+            <!-- RetroAchievements -->
+            <div class="platform-card">
+                <div class="platform-icon icon-retro">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3 class="platform-name">RetroAchievements</h3>
+                <p class="platform-description">Vincule RetroAchievements</p>
+                <button class="connect-btn" data-platform="retro" onclick="connectPlatform('retro', 'https://retroachievements.org')">
+                    Conectar
+                </button>
+            </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+            <div class="info-header">
+                <div class="info-icon">
+                    <i class="fas fa-info"></i>
+                </div>
+                <h3>Por que vincular suas contas?</h3>
+            </div>
+            <ul class="info-list">
+                <li>Sincronize automaticamente suas estatísticas de jogo</li>
+                <li>Acompanhe seu progresso em múltiplas plataformas</li>
+                <li>Conecte-se com amigos de diferentes redes</li>
+                <li>Receba notificações personalizadas sobre seus jogos</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Track connected platforms
+        const connectedPlatforms = new Set();
+        const totalPlatforms = 4;
+
+        // Check if we're returning from a platform connection
+        window.addEventListener('load', function() {
+            // Check if there's a platform parameter in the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const connectedPlatform = urlParams.get('connected');
+            
+            if (connectedPlatform) {
+                markAsConnected(connectedPlatform);
+            }
+
+            // Load previously connected platforms from localStorage
+            const savedConnections = localStorage.getItem('connectedPlatforms');
+            if (savedConnections) {
+                const platforms = JSON.parse(savedConnections);
+                platforms.forEach(platform => {
+                    connectedPlatforms.add(platform);
+                    markAsConnected(platform);
+                });
+            }
+        });
+
+        function connectPlatform(platform, url) {
+            const button = document.querySelector(`[data-platform="${platform}"]`);
+            
+            // If already connected, do nothing
+            if (button.classList.contains('connected')) {
+                return;
+            }
+
+            // Open platform URL in new tab
+            window.open(url, '_blank');
+
+            // Mark as connected after a short delay (simulating OAuth flow)
+            setTimeout(() => {
+                connectedPlatforms.add(platform);
+                markAsConnected(platform);
+                
+                // Save to localStorage
+                localStorage.setItem('connectedPlatforms', JSON.stringify([...connectedPlatforms]));
+                
+                // Check if all platforms are connected
+                checkAllConnected();
+            }, 2000);
+        }
+
+        function markAsConnected(platform) {
+            const button = document.querySelector(`[data-platform="${platform}"]`);
+            if (button && !button.classList.contains('connected')) {
+                button.classList.add('connected');
+                button.innerHTML = '<i class="fas fa-check"></i> Vinculado';
+                connectedPlatforms.add(platform);
+            }
+        }
+
+        function checkAllConnected() {
+            if (connectedPlatforms.size === totalPlatforms) {
+                // All platforms connected, redirect to dashboard
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
