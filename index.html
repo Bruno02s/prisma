@@ -1009,6 +1009,261 @@
             display: none;
         }
 
+        /* Pin Achievements Modal */
+        .pin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .pin-modal.active {
+            display: flex;
+        }
+
+        .pin-modal-content {
+            background: rgba(30, 35, 45, 0.98);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 16px;
+            padding: 0;
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            position: relative;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pin-modal-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pin-modal-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            color: #fff;
+        }
+
+        .pin-modal-header p {
+            font-size: 14px;
+            color: #9ca3af;
+            margin: 0;
+        }
+
+        .pin-modal-search {
+            padding: 20px 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .pin-search-box {
+            position: relative;
+        }
+
+        .pin-search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        .pin-search-input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            background: rgba(20, 25, 35, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #e5e7eb;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .pin-search-input::placeholder {
+            color: #6b7280;
+        }
+
+        .pin-search-input:focus {
+            border-color: rgba(96, 165, 250, 0.5);
+            background: rgba(20, 25, 35, 0.8);
+        }
+
+        .pin-modal-body {
+            padding: 20px 32px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .pin-modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .pin-modal-body::-webkit-scrollbar-track {
+            background: rgba(20, 25, 35, 0.4);
+        }
+
+        .pin-modal-body::-webkit-scrollbar-thumb {
+            background: rgba(96, 165, 250, 0.3);
+            border-radius: 4px;
+        }
+
+        .pin-modal-body::-webkit-scrollbar-thumb:hover {
+            background: rgba(96, 165, 250, 0.5);
+        }
+
+        .pin-achievement-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(20, 25, 35, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pin-achievement-item:hover {
+            background: rgba(20, 25, 35, 0.6);
+            border-color: rgba(96, 165, 250, 0.3);
+        }
+
+        .pin-achievement-item.selected {
+            background: rgba(96, 165, 250, 0.1);
+            border-color: rgba(96, 165, 250, 0.5);
+        }
+
+        .pin-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(96, 165, 250, 0.3);
+            border-radius: 6px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .pin-achievement-item.selected .pin-checkbox {
+            background: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        .pin-checkbox i {
+            color: #fff;
+            font-size: 12px;
+            display: none;
+        }
+
+        .pin-achievement-item.selected .pin-checkbox i {
+            display: block;
+        }
+
+        .pin-achievement-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            background: rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .pin-achievement-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .pin-achievement-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #e5e7eb;
+            margin-bottom: 4px;
+        }
+
+        .pin-achievement-desc {
+            font-size: 13px;
+            color: #9ca3af;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .pin-modal-footer {
+            padding: 20px 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .pin-modal-btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .pin-modal-btn-cancel {
+            background: rgba(255, 255, 255, 0.05);
+            color: #e5e7eb;
+        }
+
+        .pin-modal-btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .pin-modal-btn-confirm {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: #fff;
+        }
+
+        .pin-modal-btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+        }
+
+        .pin-modal-btn-confirm:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .pin-achievement-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+        }
+
+        .pin-achievement-empty i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
         .pinned-achievements {
             margin-top: 16px;
             padding-top: 16px;
@@ -1076,30 +1331,39 @@
                         </div>
 
                         <!-- Pinned Achievements -->
-                        <div class="pinned-achievements">
-                            <div class="pinned-grid">
-                                <div class="pinned-achievement" data-achievement='{"name":"Conflito Intenso","game":"Far Cry 6","percentage":"45.2","rarity":"uncommon","description":"Complete 10 missões de conflito em áreas de alta tensão. Domine as bases inimigas sem ser detectado.","icon":"🎮","image":"https://images.unsplash.com/photo-1580234811497-9df7fd2f357e?w=500&h=300&fit=crop"}'>
-                                    <div class="achievement-icon">🎮</div>
-                                    <div class="achievement-name">Conflito Intenso</div>
-                                    <div class="achievement-game">Far Cry 6</div>
-                                </div>
+                        <div class="mt-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Conquistas Fixadas</h3>
+                                <button id="openPinModal" class="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium flex items-center gap-2">
+                                    <i class="fas fa-thumbtack"></i>
+                                    Gerenciar
+                                </button>
+                            </div>
+                            <div class="pinned-achievements">
+                                <div class="pinned-grid" id="pinnedGrid">
+                                    <div class="pinned-achievement" data-achievement='{"name":"Conflito Intenso","game":"Far Cry 6","percentage":"45.2","rarity":"uncommon","description":"Complete 10 missões de conflito em áreas de alta tensão. Domine as bases inimigas sem ser detectado.","icon":"🎮","image":"https://images.unsplash.com/photo-1580234811497-9df7fd2f357e?w=500&h=300&fit=crop"}'>
+                                        <div class="achievement-icon">🎮</div>
+                                        <div class="achievement-name">Conflito Intenso</div>
+                                        <div class="achievement-game">Far Cry 6</div>
+                                    </div>
 
-                                <div class="pinned-achievement" data-achievement='{"name":"Mochilão","game":"Far Cry 6","percentage":"78.5","rarity":"common","description":"Colete todos os itens de mochila espalhados pelo mapa. Aumente sua capacidade de carga ao máximo.","icon":"🎒","image":"https://images.unsplash.com/photo-1580234811497-9df7fd2f357e?w=500&h=300&fit=crop"}'>
-                                    <div class="achievement-icon">🎒</div>
-                                    <div class="achievement-name">Mochilão</div>
-                                    <div class="achievement-game">Far Cry 6</div>
-                                </div>
+                                    <div class="pinned-achievement" data-achievement='{"name":"Mochilão","game":"Far Cry 6","percentage":"78.5","rarity":"common","description":"Colete todos os itens de mochila espalhados pelo mapa. Aumente sua capacidade de carga ao máximo.","icon":"🎒","image":"https://images.unsplash.com/photo-1580234811497-9df7fd2f357e?w=500&h=300&fit=crop"}'>
+                                        <div class="achievement-icon">🎒</div>
+                                        <div class="achievement-name">Mochilão</div>
+                                        <div class="achievement-game">Far Cry 6</div>
+                                    </div>
 
-                                <div class="pinned-achievement" data-achievement='{"name":"Até Não Sobrar Nenhum","game":"The Last of Us™ Parte II Remastered","percentage":"2.8","rarity":"legendary","description":"Elimine todos os inimigos em modo Realista+ sem morrer uma única vez. Uma conquista apenas para os verdadeiros mestres.","icon":"💀","image":"https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=500&h=300&fit=crop"}'>
-                                    <div class="achievement-icon">💀</div>
-                                    <div class="achievement-name">Até Não Sobrar Nenhum</div>
-                                    <div class="achievement-game">TLOU II Remastered</div>
-                                </div>
+                                    <div class="pinned-achievement" data-achievement='{"name":"Até Não Sobrar Nenhum","game":"The Last of Us™ Parte II Remastered","percentage":"2.8","rarity":"legendary","description":"Elimine todos os inimigos em modo Realista+ sem morrer uma única vez. Uma conquista apenas para os verdadeiros mestres.","icon":"💀","image":"https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=500&h=300&fit=crop"}'>
+                                        <div class="achievement-icon">💀</div>
+                                        <div class="achievement-name">Até Não Sobrar Nenhum</div>
+                                        <div class="achievement-game">TLOU II Remastered</div>
+                                    </div>
 
-                                <div class="pinned-achievement" data-achievement='{"name":"Platina","game":"God of War","percentage":"8.3","rarity":"epic","description":"Obtenha todas as conquistas do jogo. Complete todos os desafios de Muspelheim e Niflheim, e derrote todas as Valquírias.","icon":"🏆","image":"https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&h=300&fit=crop"}'>
-                                    <div class="achievement-icon">🏆</div>
-                                    <div class="achievement-name">Platina</div>
-                                    <div class="achievement-game">God of War</div>
+                                    <div class="pinned-achievement" data-achievement='{"name":"Platina","game":"God of War","percentage":"8.3","rarity":"epic","description":"Obtenha todas as conquistas do jogo. Complete todos os desafios de Muspelheim e Niflheim, e derrote todas as Valquírias.","icon":"🏆","image":"https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&h=300&fit=crop"}'>
+                                        <div class="achievement-icon">🏆</div>
+                                        <div class="achievement-name">Platina</div>
+                                        <div class="achievement-game">God of War</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1992,9 +2256,9 @@
         document.addEventListener('click', function(e) {
             console.log('Document click:', e.target);
             
-            // Check if clicked element or its parent is a pinned-achievement
+            // Check if clicked element or its parent is a pinned-achievement (not in modal)
             const achievementCard = e.target.closest('.pinned-achievement');
-            if (achievementCard && achievementCard.hasAttribute('data-achievement')) {
+            if (achievementCard && achievementCard.hasAttribute('data-achievement') && !e.target.closest('#pinModal')) {
                 console.log('Achievement card clicked!');
                 e.stopPropagation();
                 e.preventDefault();
@@ -2009,9 +2273,9 @@
                 return;
             }
 
-            // Check if clicked on close button or its child (icon)
+            // Check if clicked on close button or its child (icon) for achievement modal
             const closeButton = e.target.closest('.modal-close');
-            if (closeButton) {
+            if (closeButton && !e.target.closest('#pinModal')) {
                 console.log('Close button clicked');
                 window.closeAchievementModal(e);
                 return;
@@ -2026,6 +2290,225 @@
                     console.log('ESC key pressed');
                     window.closeAchievementModal(e);
                 }
+                
+                const pinModal = document.getElementById('pinModal');
+                if (pinModal && pinModal.classList.contains('active')) {
+                    closePinModal();
+                }
+            }
+        });
+
+        // Pin Modal Functionality
+        const allAchievements = [
+            {name: "Primeira Vitória", desc: "Vença seu primeiro jogo.", icon: "⭐", game: "Far Cry 6", percentage: "95.2"},
+            {name: "Mestre da Espada", desc: "Derrote 100 inimigos com uma espada.", icon: "⚔️", game: "Dark Souls", percentage: "32.5"},
+            {name: "Explorador Nato", desc: "Descubra todos os locais ocultos.", icon: "🌍", game: "Skyrim", percentage: "15.8"},
+            {name: "Colecionador Lendário", desc: "Adquira todos os itens lendários.", icon: "💎", game: "Diablo IV", percentage: "3.2"},
+            {name: "Protetor da Cidade", desc: "Salve a cidade de uma ameaça.", icon: "🛡️", game: "Spider-Man", percentage: "67.9"},
+            {name: "Caçador de Tesouros", desc: "Encontre 50 tesouros escondidos.", icon: "🏆", game: "Uncharted 4", percentage: "24.1"},
+            {name: "Artesão Mágico", desc: "Crie 100 itens mágicos.", icon: "🔮", game: "Minecraft", percentage: "41.3"},
+            {name: "Conflito Intenso", desc: "Complete 10 missões de conflito em áreas de alta tensão.", icon: "🎮", game: "Far Cry 6", percentage: "45.2"},
+            {name: "Mochilão", desc: "Colete todos os itens de mochila espalhados pelo mapa.", icon: "🎒", game: "Far Cry 6", percentage: "78.5"},
+            {name: "Até Não Sobrar Nenhum", desc: "Elimine todos os inimigos em modo Realista+.", icon: "💀", game: "TLOU II", percentage: "2.8"},
+            {name: "Platina", desc: "Obtenha todas as conquistas do jogo.", icon: "🏆", game: "God of War", percentage: "8.3"},
+            {name: "Velocista", desc: "Complete o jogo em menos de 2 horas.", icon: "⚡", game: "Celeste", percentage: "5.7"},
+            {name: "Pacifista", desc: "Complete sem matar nenhum inimigo.", icon: "💚", game: "Undertale", percentage: "12.4"},
+            {name: "Mestre Chef", desc: "Prepare todas as receitas disponíveis.", icon: "👨‍🍳", game: "Overcooked", percentage: "18.9"},
+        ];
+
+        let selectedAchievements = [];
+        const MAX_PINS = 4;
+
+        function openPinModal() {
+            const modal = document.getElementById('pinModal');
+            const body = document.getElementById('pinModalBody');
+            
+            // Get currently pinned achievements
+            const pinnedGrid = document.getElementById('pinnedGrid');
+            const currentPinned = Array.from(pinnedGrid.querySelectorAll('.pinned-achievement')).map(el => {
+                const data = JSON.parse(el.getAttribute('data-achievement'));
+                return data.name;
+            });
+            
+            selectedAchievements = [...currentPinned];
+            
+            renderAchievementList(allAchievements);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePinModal() {
+            const modal = document.getElementById('pinModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('pinSearchInput').value = '';
+        }
+
+        function renderAchievementList(achievements) {
+            const body = document.getElementById('pinModalBody');
+            
+            if (achievements.length === 0) {
+                body.innerHTML = `
+                    <div class="pin-achievement-empty">
+                        <i class="fas fa-search"></i>
+                        <p>Nenhuma conquista encontrada</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            body.innerHTML = achievements.map(ach => {
+                const isSelected = selectedAchievements.includes(ach.name);
+                return `
+                    <div class="pin-achievement-item ${isSelected ? 'selected' : ''}" data-name="${ach.name}">
+                        <div class="pin-checkbox">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="pin-achievement-icon-wrapper">
+                            ${ach.icon}
+                        </div>
+                        <div class="pin-achievement-info">
+                            <div class="pin-achievement-title">${ach.name}</div>
+                            <div class="pin-achievement-desc">${ach.desc}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            updateConfirmButton();
+        }
+
+        function updateConfirmButton() {
+            const btn = document.getElementById('pinConfirmBtn');
+            btn.disabled = selectedAchievements.length === 0;
+        }
+
+        // Setup event listeners after DOM loads
+        window.addEventListener('load', function() {
+            // Event delegation for achievement selection in pin modal
+            const pinModalBody = document.getElementById('pinModalBody');
+            if (pinModalBody) {
+                pinModalBody.addEventListener('click', function(e) {
+                    console.log('Pin modal body click:', e.target);
+                    const item = e.target.closest('.pin-achievement-item');
+                    if (item) {
+                        console.log('Pin achievement item clicked:', item);
+                        e.stopPropagation();
+                        
+                        const name = item.getAttribute('data-name');
+                        const isSelected = selectedAchievements.includes(name);
+                        
+                        console.log('Achievement name:', name, 'Is selected:', isSelected);
+                        
+                        if (isSelected) {
+                            selectedAchievements = selectedAchievements.filter(n => n !== name);
+                            item.classList.remove('selected');
+                        } else {
+                            if (selectedAchievements.length < MAX_PINS) {
+                                selectedAchievements.push(name);
+                                item.classList.add('selected');
+                            } else {
+                                alert(`Você pode fixar no máximo ${MAX_PINS} conquistas!`);
+                            }
+                        }
+                        
+                        console.log('Updated selected achievements:', selectedAchievements);
+                        updateConfirmButton();
+                    }
+                });
+            }
+
+            // Search functionality
+            const pinSearchInput = document.getElementById('pinSearchInput');
+            if (pinSearchInput) {
+                pinSearchInput.addEventListener('input', function(e) {
+                    const search = e.target.value.toLowerCase();
+                    const filtered = allAchievements.filter(ach => 
+                        ach.name.toLowerCase().includes(search) || 
+                        ach.desc.toLowerCase().includes(search) ||
+                        ach.game.toLowerCase().includes(search)
+                    );
+                    renderAchievementList(filtered);
+                });
+            }
+        });
+
+        // Setup pin modal buttons after DOM is ready
+        window.addEventListener('load', function() {
+            const openBtn = document.getElementById('openPinModal');
+            const cancelBtn = document.getElementById('pinCancelBtn');
+            const confirmBtn = document.getElementById('pinConfirmBtn');
+            const pinModal = document.getElementById('pinModal');
+            
+            console.log('Setting up pin modal buttons:', {openBtn, cancelBtn, confirmBtn, pinModal});
+            
+            if (openBtn) {
+                openBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Open pin modal clicked');
+                    openPinModal();
+                });
+            }
+            
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    console.log('Cancel button clicked');
+                    closePinModal();
+                });
+            }
+            
+            if (confirmBtn) {
+                confirmBtn.addEventListener('click', function(e) {
+                    console.log('Confirm button clicked');
+                    console.log('Selected achievements:', selectedAchievements);
+                    
+                    e.stopPropagation();
+                    e.preventDefault();
+                    
+                    const pinnedGrid = document.getElementById('pinnedGrid');
+                    console.log('Pinned grid element:', pinnedGrid);
+                    
+                    if (!pinnedGrid) {
+                        console.error('Pinned grid not found!');
+                        return;
+                    }
+                    
+                    const selectedData = allAchievements.filter(ach => selectedAchievements.includes(ach.name));
+                    console.log('Selected data:', selectedData);
+                    
+                    pinnedGrid.innerHTML = selectedData.map(ach => {
+                        const achievementData = {
+                            name: ach.name,
+                            game: ach.game,
+                            percentage: ach.percentage,
+                            rarity: ach.percentage >= 50 ? 'common' : ach.percentage >= 20 ? 'uncommon' : ach.percentage >= 10 ? 'rare' : ach.percentage >= 5 ? 'epic' : 'legendary',
+                            description: ach.desc,
+                            icon: ach.icon,
+                            image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&h=300&fit=crop'
+                        };
+                        
+                        return `
+                            <div class="pinned-achievement" data-achievement='${JSON.stringify(achievementData)}'>
+                                <div class="achievement-icon">${ach.icon}</div>
+                                <div class="achievement-name">${ach.name}</div>
+                                <div class="achievement-game">${ach.game}</div>
+                            </div>
+                        `;
+                    }).join('');
+                    
+                    console.log('Grid updated, closing modal');
+                    closePinModal();
+                });
+            }
+            
+            if (pinModal) {
+                pinModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closePinModal();
+                    }
+                });
             }
         });
     </script>
@@ -2059,6 +2542,32 @@
                 </div>
                 
                 <img id="modalImage" src="" alt="Game Screenshot" class="modal-image">
+            </div>
+        </div>
+    </div>
+
+    <!-- Pin Achievements Modal -->
+    <div id="pinModal" class="pin-modal">
+        <div class="pin-modal-content">
+            <div class="pin-modal-header">
+                <h2>Pinagem de Conquistas</h2>
+                <p>Selecione as conquistas que deseja exibir no seu perfil.</p>
+            </div>
+
+            <div class="pin-modal-search">
+                <div class="pin-search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="pinSearchInput" class="pin-search-input" placeholder="Buscar conquistas...">
+                </div>
+            </div>
+
+            <div class="pin-modal-body" id="pinModalBody">
+                <!-- Achievement items will be dynamically inserted here -->
+            </div>
+
+            <div class="pin-modal-footer">
+                <button class="pin-modal-btn pin-modal-btn-cancel" id="pinCancelBtn">Cancelar</button>
+                <button class="pin-modal-btn pin-modal-btn-confirm" id="pinConfirmBtn">Pinar Selecionadas</button>
             </div>
         </div>
     </div>
