@@ -359,6 +359,130 @@
             background: rgba(96, 165, 250, 0.2);
         }
 
+        /* Profile Edit Overlay */
+        .profile-avatar-container {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-edit-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .profile-avatar-container:hover .profile-edit-overlay {
+            opacity: 1;
+        }
+
+        .edit-profile-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .edit-profile-modal.active {
+            display: flex;
+        }
+
+        .edit-profile-content {
+            background: rgba(30, 35, 45, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 500px;
+            width: 100%;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .avatar-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #60a5fa;
+            margin: 0 auto 20px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-input-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(96, 165, 250, 0.2);
+            border: 1px solid #60a5fa;
+            border-radius: 12px;
+            color: #60a5fa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .file-input-label:hover {
+            background: rgba(96, 165, 250, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .form-input-profile {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(20, 25, 35, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #e5e7eb;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-input-profile:focus {
+            border-color: rgba(96, 165, 250, 0.5);
+            background: rgba(20, 25, 35, 0.8);
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+        }
+
         .game-thumbnail {
             width: 48px;
             height: 48px;
@@ -1318,18 +1442,25 @@
                     <!-- Profile Card -->
                     <div class="profile-card card p-6 lg:col-span-1">
                         <div class="flex items-start space-x-4">
-                            <div class="relative">
-                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Carly&backgroundColor=b6e3f4" 
-                                     alt="Carly" 
+                            <div class="relative profile-avatar-container" onclick="openEditProfile()">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nolan&backgroundColor=b6e3f4" 
+                                     alt="Nolan" 
+                                     id="profileAvatar"
                                      class="w-20 h-20 rounded-full border-2 border-blue-400">
+                                <div class="profile-edit-overlay">
+                                    <i class="fas fa-camera text-white text-xl"></i>
+                                </div>
                                 <div class="online-indicator pulse"></div>
                             </div>
                             <div class="flex-1">
                                 <div class="flex items-center space-x-2 mb-1">
-                                    <h2 class="text-2xl font-bold">Carly</h2>
-                                    <span class="level-badge">Nível 37</span>
+                                    <h2 class="text-2xl font-bold" id="profileName">@nolan</h2>
                                 </div>
-                                <p class="text-gray-400 text-sm">Atualizado 1 minuto atrás</p>
+                                <div class="flex items-center space-x-3 text-xs text-gray-400">
+                                    <span><strong class="text-white">12</strong> Seguidores</span>
+                                    <span>•</span>
+                                    <span><strong class="text-white">5</strong> Seguindo</span>
+                                </div>
                             </div>
                         </div>
 
@@ -2442,6 +2573,104 @@
             }
         });
 
+        // Edit Profile Functions
+        let currentAvatarUrl = 'https://api.dicebear.com/7.x/avataaars/svg?seed=Nolan&backgroundColor=b6e3f4';
+        let currentFullName = 'Nolan Bateman';
+        let currentNickname = 'nolan';
+
+        window.openEditProfile = function() {
+            const modal = document.getElementById('editProfileModal');
+            const nicknameInput = document.getElementById('nicknameInput');
+            const fullNameInput = document.getElementById('fullNameInput');
+            const avatarPreview = document.getElementById('avatarPreview');
+            
+            // Load current data
+            nicknameInput.value = currentNickname;
+            fullNameInput.value = currentFullName;
+            avatarPreview.src = currentAvatarUrl;
+            
+            modal.classList.add('active');
+        };
+
+        window.closeEditProfile = function() {
+            const modal = document.getElementById('editProfileModal');
+            modal.classList.remove('active');
+        };
+
+        window.handleAvatarChange = function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                // Check file size (max 2MB)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('A imagem deve ter no máximo 2MB');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const avatarPreview = document.getElementById('avatarPreview');
+                    avatarPreview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        window.saveProfile = function() {
+            const nicknameInput = document.getElementById('nicknameInput');
+            const fullNameInput = document.getElementById('fullNameInput');
+            const avatarPreview = document.getElementById('avatarPreview');
+            const profileName = document.getElementById('profileName');
+            const profileAvatar = document.getElementById('profileAvatar');
+            
+            // Convert nickname to lowercase and remove spaces
+            let nickname = nicknameInput.value.trim().toLowerCase().replace(/\s+/g, '_');
+            
+            // Validate nickname - only letters, numbers, and underscore
+            const nicknameRegex = /^[a-z0-9_]+$/;
+            if (!nickname) {
+                alert('Por favor, insira um nickname');
+                return;
+            }
+            
+            if (!nicknameRegex.test(nickname)) {
+                alert('O nickname deve conter apenas letras minúsculas, números e underscore (_)');
+                return;
+            }
+
+            if (nickname.length < 3) {
+                alert('O nickname deve ter pelo menos 3 caracteres');
+                return;
+            }
+
+            if (!fullNameInput.value.trim()) {
+                alert('Por favor, insira seu nome completo');
+                return;
+            }
+
+            // Update profile - nickname with @ is displayed on dashboard
+            profileName.textContent = '@' + nickname;
+            profileAvatar.src = avatarPreview.src;
+            currentAvatarUrl = avatarPreview.src;
+            currentNickname = nickname;
+            currentFullName = fullNameInput.value;
+            
+            // Update input to show formatted nickname
+            nicknameInput.value = nickname;
+            
+            // Close modal
+            closeEditProfile();
+            
+            // Show success message
+            alert('Perfil atualizado com sucesso!');
+        };
+
+        // Close modal on backdrop click
+        document.getElementById('editProfileModal')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEditProfile();
+            }
+        });
+
         // Setup pin modal buttons after DOM is ready
         window.addEventListener('load', function() {
             const openBtn = document.getElementById('openPinModal');
@@ -2521,6 +2750,64 @@
             }
         });
     </script>
+
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="edit-profile-modal">
+        <div class="edit-profile-content">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-white">Editar Perfil</h2>
+                <button onclick="closeEditProfile()" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Avatar Preview -->
+            <div class="text-center mb-6">
+                <img id="avatarPreview" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nolan&backgroundColor=b6e3f4" 
+                     alt="Avatar Preview" 
+                     class="avatar-preview">
+            </div>
+
+            <!-- Upload Photo -->
+            <div class="mb-6">
+                <label class="block text-sm font-semibold text-gray-300 mb-2">Foto de Perfil</label>
+                <div class="file-input-wrapper">
+                    <input type="file" id="avatarInput" accept="image/*" onchange="handleAvatarChange(event)">
+                    <label for="avatarInput" class="file-input-label">
+                        <i class="fas fa-camera"></i>
+                        Escolher Nova Foto
+                    </label>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">JPG, PNG ou GIF. Máximo 2MB.</p>
+            </div>
+
+            <!-- Nome Completo -->
+            <div class="mb-4">
+                <label class="block text-sm font-semibold text-gray-300 mb-2">Nome Completo</label>
+                <input type="text" id="fullNameInput" class="form-input-profile" placeholder="Digite seu nome completo" value="Nolan Bateman">
+            </div>
+
+            <!-- Nickname -->
+            <div class="mb-6">
+                <label class="block text-sm font-semibold text-gray-300 mb-2">Nickname</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-medium">@</span>
+                    <input type="text" id="nicknameInput" class="form-input-profile pl-8" placeholder="digite_seu_nickname" value="nolan" style="text-transform: lowercase;">
+                </div>
+                <p class="text-xs text-gray-500 mt-1">Apenas letras minúsculas, números e underscore. Este será exibido no seu perfil</p>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-3">
+                <button onclick="closeEditProfile()" class="flex-1 px-4 py-3 bg-transparent border border-gray-600 rounded-lg text-gray-300 font-semibold hover:bg-gray-800 transition-colors">
+                    Cancelar
+                </button>
+                <button onclick="saveProfile()" class="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg text-white font-semibold hover:shadow-lg transition-all">
+                    Salvar Alterações
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Achievement Modal -->
     <div id="achievementModal" class="achievement-modal">
