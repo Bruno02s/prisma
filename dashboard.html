@@ -744,6 +744,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .follower-card::after {
@@ -2332,16 +2333,44 @@
             });
         });
 
+        // Open profile page when clicking on follower card
+        document.addEventListener('click', function(e) {
+            const followerCard = e.target.closest('.follower-card');
+            
+            // Se clicar no card mas não no botão de seguir
+            if (followerCard && !e.target.classList.contains('btn-follow')) {
+                const username = followerCard.querySelector('.follower-username').textContent.replace('@', '');
+                window.location.href = `profile.html?user=${username}`;
+                return;
+            }
+        });
+
         // Follow/Unfollow button functionality
         document.addEventListener('click', function(e) {
             if (e.target.classList.contains('btn-follow')) {
+                e.stopPropagation(); // Previne a abertura do perfil
+                
                 const followingCountElement = document.getElementById('followingCount');
                 let currentCount = parseInt(followingCountElement.textContent);
+                const followerCard = e.target.closest('.follower-card');
+                const username = followerCard.querySelector('.follower-username').textContent.replace('@', '').toLowerCase();
+                
+                // Gerenciar localStorage de following
+                let following = JSON.parse(localStorage.getItem('following') || '[]');
+                
+                console.log('Dashboard - Toggle follow for:', username);
+                console.log('Current following list:', following);
                 
                 if (e.target.classList.contains('following')) {
                     // Deixar de seguir
                     e.target.classList.remove('following');
                     e.target.textContent = 'Seguir';
+                    
+                    // Remover do localStorage
+                    following = following.filter(user => user !== username);
+                    localStorage.setItem('following', JSON.stringify(following));
+                    
+                    console.log('Unfollowed. New list:', following);
                     
                     // Atualizar contador
                     currentCount--;
@@ -2357,6 +2386,14 @@
                     // Seguir
                     e.target.classList.add('following');
                     e.target.textContent = '';
+                    
+                    // Adicionar ao localStorage
+                    if (!following.includes(username)) {
+                        following.push(username);
+                        localStorage.setItem('following', JSON.stringify(following));
+                    }
+                    
+                    console.log('Followed. New list:', following);
                     
                     // Atualizar contador
                     currentCount++;
