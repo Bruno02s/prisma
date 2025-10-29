@@ -1457,9 +1457,9 @@
                                     <h2 class="text-2xl font-bold" id="profileName">@nolan</h2>
                                 </div>
                                 <div class="flex items-center space-x-3 text-xs text-gray-400">
-                                    <span><strong class="text-white">12</strong> Seguidores</span>
+                                    <span><strong class="text-white" id="followersCount">12</strong> Seguidores</span>
                                     <span>•</span>
-                                    <span><strong class="text-white">5</strong> Seguindo</span>
+                                    <span><strong class="text-white" id="followingCount">5</strong> Seguindo</span>
                                 </div>
                             </div>
                         </div>
@@ -1503,27 +1503,57 @@
                         </div>
                     </div>
 
-                    <!-- Current Game Card -->
-                    <div class="card p-6 lg:col-span-2">
-                        <div class="flex items-center space-x-4">
-                            <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=100&h=100&fit=crop" 
-                                 alt="Silent Hill" 
-                                 class="w-16 h-16 rounded-lg">
-                            <div class="flex-1">
-                                <h3 class="text-xl font-bold mb-1">SILENT HILL 1</h3>
-                                <div class="flex items-center space-x-2">
-                                    <span class="bg-green-500/20 text-green-400 text-xs px-3 py-1 rounded-full font-semibold">
-                                        Jogando
-                                    </span>
-                                    <span class="text-gray-400 text-sm">Calma Vez - Tributo direta</span>
+                    <!-- Recently Played Game Card -->
+                    <div class="card p-0 lg:col-span-2 overflow-hidden">
+                        <div class="relative h-48" style="background: linear-gradient(to bottom, rgba(15, 20, 25, 0.3), rgba(15, 20, 25, 0.95)), url('https://cdn.akamai.steamstatic.com/steam/apps/251570/library_hero.jpg?t=1698080003') center/cover;">
+                            <div class="absolute bottom-0 left-0 right-0 p-6">
+                                <div class="flex items-start space-x-4">
+                                    <img src="assets/images/logo7daystodie.png" 
+                                         alt="7 Days to Die" 
+                                         class="w-20 h-20 rounded border-2 border-gray-700 shadow-lg object-cover">
+                                    <div class="flex-1">
+                                        <h3 class="text-xl font-bold mb-2">7 Days to Die</h3>
+                                        <div class="text-sm text-gray-300 mb-3">
+                                            <span class="font-semibold">229 horas registradas</span>
+                                        </div>
+                                        <div class="text-xs text-gray-400">
+                                            jogado pela última vez em 29 de out.
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex space-x-2">
-                                <i class="achievement-star fas fa-star"></i>
-                                <i class="achievement-star fas fa-star"></i>
-                                <i class="achievement-star fas fa-star"></i>
-                                <i class="achievement-star fas fa-star"></i>
-                                <i class="achievement-star fas fa-star"></i>
+                        </div>
+                        
+                        <!-- Achievements Preview Bar -->
+                        <div class="bg-gray-800/50 px-6 py-3 border-t border-gray-700/50">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs text-gray-400 font-medium uppercase tracking-wider">Conquistas</span>
+                                <span class="text-xs text-gray-400">38 de 43</span>
+                            </div>
+                            <div class="flex items-center space-x-2 mb-2">
+                                <div class="flex-1 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full" style="width: 88.4%;"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <div class="w-10 h-10 bg-gray-700 rounded flex items-center justify-center text-lg" title="Conquista 1">
+                                    🎯
+                                </div>
+                                <div class="w-10 h-10 bg-gray-700 rounded flex items-center justify-center text-lg" title="Conquista 2">
+                                    💡
+                                </div>
+                                <div class="w-10 h-10 bg-gray-700 rounded flex items-center justify-center text-lg" title="Conquista 3">
+                                    🗽
+                                </div>
+                                <div class="w-10 h-10 bg-gray-700 rounded flex items-center justify-center text-lg" title="Conquista 4">
+                                    🏍️
+                                </div>
+                                <div class="w-10 h-10 bg-gray-700 rounded flex items-center justify-center text-lg" title="Conquista 5">
+                                    🎓
+                                </div>
+                                <div class="flex items-center justify-center text-sm text-gray-400 font-semibold ml-2">
+                                    +33
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1602,17 +1632,6 @@
                 <div class="card p-6">
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-2xl font-bold">Jogos Recentes</h2>
-                        <div class="view-toggle flex space-x-1">
-                            <button class="active">
-                                <i class="fas fa-bars"></i>
-                            </button>
-                            <button>
-                                <i class="fas fa-th-large"></i>
-                            </button>
-                            <button>
-                                <i class="fas fa-th"></i>
-                            </button>
-                        </div>
                     </div>
 
                     <!-- Table Header -->
@@ -2045,6 +2064,56 @@
         </div>
     </div>
 
+    <!-- Logout Success Modal -->
+    <div id="logoutModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50" style="display: none;">
+        <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-12 max-w-md w-full mx-4 shadow-2xl border border-gray-700/50 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Logout Realizado com Sucesso!</h2>
+            <p class="text-gray-300 mb-3">Você foi desconectado(a) da Plataforma Moderna.</p>
+            <p class="text-gray-400 text-sm mb-8">Sua sessão foi encerrada por segurança.</p>
+            <button onclick="confirmLogout()" class="w-full py-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold text-lg rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                Entrar Novamente
+            </button>
+        </div>
+    </div>
+
+    <!-- Delete Account Confirmation Modal -->
+    <div id="deleteConfirmModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50" style="display: none;">
+        <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl border border-red-900/50">
+            <div class="text-center mb-6">
+                <i class="fas fa-exclamation-triangle text-red-500 text-5xl mb-4"></i>
+                <h2 class="text-2xl font-bold text-white mb-2">ATENÇÃO: Esta ação é irreversível!</h2>
+            </div>
+            <p class="text-gray-300 mb-4 text-center">Todos os seus dados, conquistas e progresso serão permanentemente apagados.</p>
+            <div class="mb-6">
+                <label class="block text-gray-400 text-sm mb-2 text-left">Digite "EXCLUIR" para confirmar:</label>
+                <input type="text" id="deleteConfirmInput" class="w-full px-4 py-3 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-red-500 focus:outline-none text-center font-bold" placeholder="EXCLUIR">
+            </div>
+            <div class="flex gap-3">
+                <button onclick="closeDeleteConfirm()" class="flex-1 py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition-all duration-300">
+                    Cancelar
+                </button>
+                <button onclick="processDelete()" class="flex-1 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    Excluir Conta
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Success Modal -->
+    <div id="deleteModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50" style="display: none;">
+        <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-12 max-w-md w-full mx-4 shadow-2xl border border-red-900/50 text-center">
+            <div class="mb-6">
+                <i class="fas fa-trash-alt text-red-500 text-5xl"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-white mb-4">Conta Excluída com Sucesso!</h2>
+            <p class="text-gray-300 mb-3">Sua conta foi permanentemente removida.</p>
+            <p class="text-gray-400 text-sm mb-8">Todos os seus dados, conquistas e progresso foram apagados.</p>
+            <button onclick="confirmDelete()" class="w-full py-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold text-lg rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                Sair
+            </button>
+        </div>
+    </div>
+
     <script>
         // Platform trophy statistics (percentages)
         // Total must equal 100%
@@ -2177,28 +2246,54 @@
         const logoutBtn = document.querySelector('.btn-logout');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', function() {
-                if (confirm('Tem certeza que deseja sair?')) {
-                    alert('Logout realizado com sucesso!');
-                    // Aqui você adicionaria a lógica real de logout
-                }
+                // Show logout modal
+                const logoutModal = document.getElementById('logoutModal');
+                logoutModal.style.display = 'flex';
             });
         }
+
+        // Confirm logout and redirect
+        window.confirmLogout = function() {
+            window.location.href = 'index.html';
+        };
 
         // Delete account button functionality
         const deleteBtn = document.querySelector('.btn-delete');
         if (deleteBtn) {
             deleteBtn.addEventListener('click', function() {
-                const confirmMsg = 'ATENÇÃO: Esta ação é irreversível!\n\nTodos os seus dados, conquistas e progresso serão permanentemente apagados.\n\nDigite "EXCLUIR" para confirmar:';
-                const userInput = prompt(confirmMsg);
-                
-                if (userInput === 'EXCLUIR') {
-                    alert('Conta excluída com sucesso. Você será redirecionado.');
-                    // Aqui você adicionaria a lógica real de exclusão
-                } else if (userInput !== null) {
-                    alert('Confirmação incorreta. A conta não foi excluída.');
-                }
+                // Show delete confirmation modal
+                const deleteConfirmModal = document.getElementById('deleteConfirmModal');
+                deleteConfirmModal.style.display = 'flex';
+                // Clear input
+                document.getElementById('deleteConfirmInput').value = '';
             });
         }
+
+        // Close delete confirmation modal
+        window.closeDeleteConfirm = function() {
+            const deleteConfirmModal = document.getElementById('deleteConfirmModal');
+            deleteConfirmModal.style.display = 'none';
+            document.getElementById('deleteConfirmInput').value = '';
+        };
+
+        // Process delete account
+        window.processDelete = function() {
+            const input = document.getElementById('deleteConfirmInput').value;
+            if (input === 'EXCLUIR') {
+                // Hide confirmation modal
+                document.getElementById('deleteConfirmModal').style.display = 'none';
+                // Show success modal
+                const deleteModal = document.getElementById('deleteModal');
+                deleteModal.style.display = 'flex';
+            } else {
+                alert('Confirmação incorreta. Digite "EXCLUIR" para confirmar a exclusão.');
+            }
+        };
+
+        // Confirm delete and redirect
+        window.confirmDelete = function() {
+            window.location.href = 'index.html';
+        };
 
         // Followers tabs functionality
         const followersTabs = document.querySelectorAll('.followers-tab');
@@ -2240,7 +2335,40 @@
         // Follow/Unfollow button functionality
         document.addEventListener('click', function(e) {
             if (e.target.classList.contains('btn-follow')) {
-                e.target.classList.toggle('following');
+                const followingCountElement = document.getElementById('followingCount');
+                let currentCount = parseInt(followingCountElement.textContent);
+                
+                if (e.target.classList.contains('following')) {
+                    // Deixar de seguir
+                    e.target.classList.remove('following');
+                    e.target.textContent = 'Seguir';
+                    
+                    // Atualizar contador
+                    currentCount--;
+                    followingCountElement.textContent = currentCount;
+                    
+                    // Atualizar título da aba "Seguindo"
+                    const followersHeader = document.querySelector('.followers-header h1');
+                    const activeTab = document.querySelector('.followers-tab.active');
+                    if (activeTab && activeTab.getAttribute('data-tab') === 'seguindo') {
+                        followersHeader.textContent = `Seguindo (${currentCount})`;
+                    }
+                } else {
+                    // Seguir
+                    e.target.classList.add('following');
+                    e.target.textContent = '';
+                    
+                    // Atualizar contador
+                    currentCount++;
+                    followingCountElement.textContent = currentCount;
+                    
+                    // Atualizar título da aba "Seguindo"
+                    const followersHeader = document.querySelector('.followers-header h1');
+                    const activeTab = document.querySelector('.followers-tab.active');
+                    if (activeTab && activeTab.getAttribute('data-tab') === 'seguindo') {
+                        followersHeader.textContent = `Seguindo (${currentCount})`;
+                    }
+                }
             }
         });
 
@@ -2263,15 +2391,6 @@
                 });
             });
         }
-
-        // View toggle functionality
-        const viewButtons = document.querySelectorAll('.view-toggle button');
-        viewButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                viewButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
 
         // Animate progress bars on load
         window.addEventListener('load', () => {
