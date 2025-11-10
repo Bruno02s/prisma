@@ -363,7 +363,7 @@
                 </div>
                 <h3 class="platform-name">Steam</h3>
                 <p class="platform-description">Vincule sua biblioteca Steam</p>
-                <button class="connect-btn" data-platform="steam" onclick="connectPlatform('steam', 'https://steamcommunity.com')">
+                <button class="connect-btn" data-platform="steam" onclick="connectPlatform('steam', 'https://steamcommunity.com/login')">
                     Conectar
                 </button>
             </div>
@@ -375,7 +375,7 @@
                 </div>
                 <h3 class="platform-name">PlayStation Network</h3>
                 <p class="platform-description">Conecte sua conta PSN</p>
-                <button class="connect-btn" data-platform="playstation" onclick="connectPlatform('playstation', 'https://www.playstation.com')">
+                <button class="connect-btn" data-platform="playstation" onclick="connectPlatform('playstation', 'https://id.sonyentertainmentnetwork.com/signin')">
                     Conectar
                 </button>
             </div>
@@ -387,7 +387,7 @@
                 </div>
                 <h3 class="platform-name">Xbox Live</h3>
                 <p class="platform-description">Conecte sua conta Xbox</p>
-                <button class="connect-btn" data-platform="xbox" onclick="connectPlatform('xbox', 'https://www.xbox.com')">
+                <button class="connect-btn" data-platform="xbox" onclick="connectPlatform('xbox', 'https://login.live.com/login.srf')">
                     Conectar
                 </button>
             </div>
@@ -399,7 +399,7 @@
                 </div>
                 <h3 class="platform-name">RetroAchievements</h3>
                 <p class="platform-description">Vincule RetroAchievements</p>
-                <button class="connect-btn" data-platform="retro" onclick="connectPlatform('retro', 'https://retroachievements.org')">
+                <button class="connect-btn" data-platform="retro" onclick="connectPlatform('retro', 'https://retroachievements.org/login')">
                     Conectar
                 </button>
             </div>
@@ -427,27 +427,6 @@
         const connectedPlatforms = new Set();
         const totalPlatforms = 4;
 
-        // Check if we're returning from a platform connection
-        window.addEventListener('load', function() {
-            // Check if there's a platform parameter in the URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const connectedPlatform = urlParams.get('connected');
-            
-            if (connectedPlatform) {
-                markAsConnected(connectedPlatform);
-            }
-
-            // Load previously connected platforms from localStorage
-            const savedConnections = localStorage.getItem('connectedPlatforms');
-            if (savedConnections) {
-                const platforms = JSON.parse(savedConnections);
-                platforms.forEach(platform => {
-                    connectedPlatforms.add(platform);
-                    markAsConnected(platform);
-                });
-            }
-        });
-
         function connectPlatform(platform, url) {
             const button = document.querySelector(`[data-platform="${platform}"]`);
             
@@ -456,20 +435,18 @@
                 return;
             }
 
-            // Open platform URL in new tab
-            window.open(url, '_blank');
+            // Open platform login URL in new tab
+            window.open(url, '_blank', 'noopener,noreferrer');
 
-            // Mark as connected after a short delay (simulating OAuth flow)
-            setTimeout(() => {
-                connectedPlatforms.add(platform);
-                markAsConnected(platform);
-                
-                // Save to localStorage
-                localStorage.setItem('connectedPlatforms', JSON.stringify([...connectedPlatforms]));
-                
-                // Check if all platforms are connected
-                checkAllConnected();
-            }, 2000);
+            // Mark as connected
+            connectedPlatforms.add(platform);
+            markAsConnected(platform);
+            
+            // Save to localStorage
+            localStorage.setItem('connectedPlatforms', JSON.stringify([...connectedPlatforms]));
+            
+            // Check if all platforms are connected
+            checkAllConnected();
         }
 
         function markAsConnected(platform) {

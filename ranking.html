@@ -4,136 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ranking - Prisma</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Modular -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/followers.css">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
-        * {
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            background: #0a0e14;
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Prisma Background */
-        .prisma-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .light-beam {
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            opacity: 0;
-            animation: fadeIn 1s ease-out forwards;
-            mix-blend-mode: screen;
-            filter: blur(60px);
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(20px, -20px) rotate(2deg); }
-            50% { transform: translate(-15px, 15px) rotate(-1deg); }
-            75% { transform: translate(15px, 10px) rotate(1deg); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.6; }
-        }
-
-        .beam-playstation {
-            background: radial-gradient(ellipse at center, 
-                rgba(0, 112, 204, 0.25) 0%,
-                rgba(0, 112, 204, 0.15) 30%,
-                rgba(0, 112, 204, 0.05) 50%,
-                transparent 70%
-            );
-            top: -50%;
-            left: -20%;
-            animation: float 20s ease-in-out infinite, pulse 8s ease-in-out infinite;
-        }
-
-        .beam-steam {
-            background: radial-gradient(ellipse at center, 
-                rgba(102, 192, 244, 0.45) 0%,
-                rgba(102, 192, 244, 0.35) 25%,
-                rgba(102, 192, 244, 0.2) 45%,
-                rgba(102, 192, 244, 0.08) 60%,
-                transparent 75%
-            );
-            top: -60%;
-            right: -30%;
-            animation: float 25s ease-in-out infinite reverse, pulse 10s ease-in-out infinite;
-            animation-delay: 1s;
-        }
-
-        .beam-xbox {
-            background: radial-gradient(ellipse at center, 
-                rgba(16, 124, 16, 0.2) 0%,
-                rgba(16, 124, 16, 0.12) 35%,
-                rgba(16, 124, 16, 0.04) 55%,
-                transparent 70%
-            );
-            bottom: -40%;
-            left: 10%;
-            animation: float 18s ease-in-out infinite, pulse 9s ease-in-out infinite;
-            animation-delay: 2s;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background: rgba(15, 20, 25, 0.95);
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-            position: fixed;
-            left: 0;
-            top: 0;
-            height: 100vh;
-            z-index: 100;
-        }
-
-        .sidebar-icon {
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .sidebar-icon:hover {
-            background: rgba(96, 165, 250, 0.1);
-        }
-
-        .sidebar-icon.active {
-            background: rgba(96, 165, 250, 0.2);
-        }
-
-        /* Content */
-        .content-layer {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Header */
+        /* Ranking-specific styles */
         .page-header {
             background: rgba(30, 35, 45, 0.8);
             backdrop-filter: blur(10px);
@@ -143,7 +29,6 @@
             margin-bottom: 24px;
         }
 
-        /* Filters */
         .filter-section {
             background: rgba(30, 35, 45, 0.6);
             backdrop-filter: blur(10px);
@@ -194,7 +79,6 @@
             background: rgba(20, 25, 35, 0.8);
         }
 
-        /* Ranking Table */
         .ranking-container {
             background: rgba(30, 35, 45, 0.8);
             backdrop-filter: blur(10px);
@@ -336,28 +220,30 @@
         }
     </style>
 </head>
-<body>
-    <!-- Prisma Background -->
+<body class="text-gray-100">
+    <!-- Prisma Background Effect -->
     <div class="prisma-background">
-        <div class="light-beam beam-playstation"></div>
         <div class="light-beam beam-steam"></div>
+        <div class="light-beam beam-playstation"></div>
         <div class="light-beam beam-xbox"></div>
+        <div class="light-beam beam-retro"></div>
+        <div class="prisma-core"></div>
     </div>
 
     <!-- Sidebar -->
-    <div class="sidebar w-14 flex flex-col items-center py-4 space-y-3">
+    <div class="sidebar">
         <div class="sidebar-icon" onclick="window.location.href='dashboard.html'">
-            <i class="fas fa-gamepad text-gray-400"></i>
+            <i class="fas fa-gamepad"></i>
         </div>
         <div class="sidebar-icon active">
-            <i class="fas fa-trophy text-blue-400"></i>
+            <i class="fas fa-trophy"></i>
         </div>
-        <div class="sidebar-icon" onclick="window.location.href='dashboard.html'">
-            <i class="fas fa-user text-gray-400"></i>
+        <div class="sidebar-icon" onclick="window.location.href='followers.html'">
+            <i class="fas fa-users"></i>
         </div>
-        <div class="flex-1"></div>
-        <div class="sidebar-icon">
-            <i class="fas fa-cog text-gray-400"></i>
+        <div style="flex: 1;"></div>
+        <div class="sidebar-icon" onclick="window.location.href='settings.html'">
+            <i class="fas fa-cog"></i>
         </div>
     </div>
 
@@ -373,10 +259,7 @@
                             <h1 class="text-3xl font-bold text-white mb-2">Ranking Geral</h1>
                             <p class="text-gray-400 text-sm">Competição entre você e as pessoas que você segue</p>
                         </div>
-                        <button class="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg text-white text-sm font-semibold hover:shadow-lg transition-all">
-                            <i class="fas fa-sync-alt mr-2"></i>
-                            Atualizar
-                        </button>
+                        <!-- Botão 'Atualizar' removido conforme solicitado -->
                     </div>
                 </div>
 
@@ -385,19 +268,16 @@
                     <div class="flex flex-wrap items-center justify-between gap-4">
                         <div class="flex items-center gap-2">
                             <span class="text-sm text-gray-400 mr-2">Filtros de Ranking</span>
-                            <button class="filter-btn active"><i class="fas fa-trophy mr-2"></i>Todas</button>
-                            <button class="filter-btn"><i class="fab fa-playstation mr-2"></i>PSN</button>
-                            <button class="filter-btn"><i class="fab fa-xbox mr-2"></i>XBOX</button>
-                            <button class="filter-btn"><i class="fab fa-steam mr-2"></i>STEAM</button>
-                            <button class="filter-btn"><i class="fas fa-gamepad mr-2"></i>RETRO ARCHVIMENTS</button>
+                            <button class="filter-btn active" data-filter="all"><i class="fas fa-trophy mr-2"></i>Todas</button>
+                            <button class="filter-btn" data-filter="psn"><i class="fab fa-playstation mr-2"></i>PSN</button>
+                            <button class="filter-btn" data-filter="xbox"><i class="fab fa-xbox mr-2"></i>XBOX</button>
+                            <button class="filter-btn" data-filter="steam"><i class="fab fa-steam mr-2"></i>STEAM</button>
+                            <button class="filter-btn" data-filter="retro"><i class="fas fa-gamepad mr-2"></i>RETRO ARCHVIMENTS</button>
                         </div>
                         <div class="relative">
                             <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
                             <input type="text" class="search-input" placeholder="Buscar jogador...">
                         </div>
-                        <button class="filter-btn">
-                            Período: <span class="text-blue-400 ml-1">Total</span>
-                        </button>
                     </div>
                 </div>
 
@@ -616,17 +496,36 @@
     </div>
 
     <script>
-        // Filter buttons functionality
+        // Filter buttons functionality (inclui filtragem por plataforma)
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 // Remove active from all buttons in the same group
                 const filterGroup = this.parentElement.querySelectorAll('.filter-btn');
                 filterGroup.forEach(b => b.classList.remove('active'));
-                
+
                 // Add active to clicked button
                 this.classList.add('active');
+
+                // Apply platform filter if data-filter is present
+                const filter = this.getAttribute('data-filter') || 'all';
+                applyPlatformFilter(filter);
             });
         });
+
+        // Função que mostra/oculta linhas da tabela com base na plataforma selecionada
+        function applyPlatformFilter(filter) {
+            const rows = document.querySelectorAll('.ranking-row');
+            rows.forEach(row => {
+                if (filter === 'all') {
+                    row.style.display = '';
+                    return;
+                }
+
+                // Verifica se a linha possui uma tag de plataforma correspondente
+                const hasPlatform = row.querySelector(`.platform-tag.platform-${filter}`);
+                row.style.display = hasPlatform ? '' : 'none';
+            });
+        }
 
         // Search functionality
         const searchInput = document.querySelector('.search-input');
