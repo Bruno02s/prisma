@@ -45,6 +45,10 @@
     .sidebar-icon:last-child {
         margin-right: 0;
     }
+    /* When a modal is open, hide the bottom navigation so modals are not obstructed */
+    .sidebar.modal-open {
+        display: none !important;
+    }
     /* ensure all icons are vertically centered on mobile to match ranking */
     .sidebar {
         align-items: center !important;

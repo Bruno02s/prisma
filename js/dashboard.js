@@ -80,6 +80,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Global focus handler: when any input inside a modal receives focus, ensure bottom nav hides
+document.addEventListener('focusin', function(e) {
+    try {
+        const target = e.target;
+        if (!target) return;
+        // if focused element is inside a modal overlay (common pattern: fixed inset-0)
+        const modalOverlay = target.closest('.fixed.inset-0');
+        if (modalOverlay && window.getComputedStyle(modalOverlay).display !== 'none') {
+            const sidebar = document.querySelector('.sidebar');
+            if (sidebar) sidebar.classList.add('modal-open');
+        }
+    } catch (err) {
+        // swallow
+    }
+});
+
 // Edit Profile Modal
 function openEditProfile() {
     const modal = document.getElementById('editProfileModal');
@@ -92,6 +108,8 @@ function openEditProfile() {
             editNickname.value = currentName.replace(/^@\s*/, '');
         }
         modal.style.display = 'flex';
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) sidebar.classList.add('modal-open');
     }
 }
 
@@ -99,6 +117,8 @@ function closeEditProfile() {
     const modal = document.getElementById('editProfileModal');
     if (modal) {
         modal.style.display = 'none';
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) sidebar.classList.remove('modal-open');
     }
 }
 
@@ -129,6 +149,8 @@ function openPinAchievements() {
         // Populate list of achievements
         populatePinModal();
         modal.style.display = 'flex';
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) sidebar.classList.add('modal-open');
     }
 }
 
@@ -136,6 +158,8 @@ function closePinAchievements() {
     const modal = document.getElementById('pinAchievementsModal');
     if (modal) {
         modal.style.display = 'none';
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) sidebar.classList.remove('modal-open');
     }
 }
 
@@ -379,6 +403,10 @@ function showLogoutModal() {
     const modal = document.getElementById('logoutModal');
     if (modal) {
         modal.style.display = 'flex';
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) sidebar.classList.add('modal-open');
+
+        // (no input focus needed for logout modal)
     }
 }
 
@@ -396,7 +424,25 @@ document.addEventListener('click', function(e) {
 function showDeleteConfirmModal() {
     const modal = document.getElementById('deleteConfirmModal');
     if (modal) {
+        console.log('[modal-debug] showDeleteConfirmModal() called');
         modal.style.display = 'flex';
+        // mark overlay as compact so actions stay closer to content while modal is open
+        modal.classList.add('actions-compact');
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) sidebar.classList.add('modal-open');
+        // small delay then ensure actions visible and focus input (ux for mobile)
+        setTimeout(() => {
+            try {
+                const actions = modal.querySelector('.modal-actions');
+                const input = document.getElementById('deleteConfirmInput');
+                // Do not scroll or reposition actions on open — keep actions fixed inside modal.
+                // focus the input so the keyboard appears and we can rely on focus handlers
+                if (input) {
+                    input.focus({ preventScroll: true });
+                    console.log('[modal-debug] focused delete input after open');
+                }
+            } catch(e) { /* swallow on older browsers */ }
+        }, 220);
     }
 }
 
@@ -404,7 +450,13 @@ function closeDeleteConfirm() {
     const modal = document.getElementById('deleteConfirmModal');
     const input = document.getElementById('deleteConfirmInput');
     if (modal) {
+        console.log('[modal-debug] closeDeleteConfirm() called');
         modal.style.display = 'none';
+        // ensure any temporary classes are removed when modal closes
+        modal.classList.remove('actions-compact');
+        // no actions-shifted anymore — ensure pinned/fixed removed elsewhere
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) sidebar.classList.remove('modal-open');
     }
     if (input) {
         input.value = '';
@@ -425,6 +477,8 @@ function showDeleteSuccessModal() {
     const modal = document.getElementById('deleteModal');
     if (modal) {
         modal.style.display = 'flex';
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) sidebar.classList.add('modal-open');
     }
 }
 
@@ -456,14 +510,57 @@ function openAchievementModal(data) {
     document.getElementById('modalAchievementRarity').textContent = rarityMap[data.rarity] || data.rarity;
 
     modal.style.display = 'flex';
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar) sidebar.classList.add('modal-open');
 }
 
 function closeAchievementModal() {
     const modal = document.getElementById('achievementModal');
     if (modal) {
         modal.style.display = 'none';
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) sidebar.classList.remove('modal-open');
     }
 }
+
+// UX fallback: when the delete confirm input is focused (mobile keyboard open), ensure actions are visible
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('deleteConfirmInput');
+    if (input) {
+        input.addEventListener('focus', function() {
+            console.log('[modal-debug] deleteConfirmInput focused (innerHeight=', window.innerHeight, ')');
+            // ensure bottom nav is hidden if present
+            const sidebar = document.querySelector('.sidebar');
+            if (sidebar) sidebar.classList.add('modal-open');
+
+            // Keep actions visually stable. Only ensure modal state and don't scroll
+            // or reposition elements when the input receives focus.
+            const modal = document.getElementById('deleteConfirmModal');
+            if (!modal) return;
+            // no-op: intentionally do not scroll or toggle classes.
+        });
+
+                // NOTE: we don't remove modal-open on blur because the modal may still be open;
+        // the modal closing functions are responsible for removing the class.
+                // ensure pinned state is removed on blur
+                input.addEventListener('blur', function() {
+                    try {
+                        const modal = document.getElementById('deleteConfirmModal');
+                        const actions = modal && modal.querySelector('.modal-actions');
+                        if (actions) {
+                                // on blur: do not modify actions placement — leave the UI stable
+                                console.log('[modal-debug] blur: no change to actions placement');
+                            }
+                    } catch(e) {}
+                });
+
+                // visualViewport detection — some mobile browsers adjust visual viewport when keyboard appears
+                if (window.visualViewport) {
+                    // Removed visualViewport-driven repositioning logic intentionally —
+                    // the action buttons are kept stationary inside the modal at all times.
+                }
+    }
+});
 
 // Fallback: event delegation for abrir o modal de "Gerenciar" caso a ligação direta não tenha sido feita
 document.addEventListener('click', function(e) {

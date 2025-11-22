@@ -172,6 +172,11 @@
             color: #60a5fa;
         }
 
+        /* Icon-only filter buttons: smaller, square and centered icon */
+        .filter-btn i { margin: 0; font-size: 18px; display: inline-block; }
+        .filter-btn { padding: 10px; width: 48px; height: 44px; display: inline-flex; align-items:center; justify-content:center; }
+        .filter-btn.active { box-shadow: 0 8px 16px rgba(96,165,250,0.1); }
+
         .search-input {
             background: rgba(20, 25, 35, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -327,6 +332,59 @@
             .ranking-row td:nth-child(3) {
                 display: none;
             }
+            /* Mobile-friendly ranking rows: switch from table to stacked cards
+               so columns don't overflow and spacing remains consistent. */
+            .ranking-table, .ranking-table thead, .ranking-table tbody, .ranking-table th, .ranking-table td, .ranking-table tr {
+                display: block;
+                width: 100%;
+            }
+
+            /* hide header row completely in mobile card view */
+            .ranking-header { display: none; }
+
+            /* Each row becomes a card */
+            .ranking-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 12px;
+                border-radius: 12px;
+                margin-bottom: 12px;
+                background: rgba(18, 23, 30, 0.55);
+                border: 1px solid rgba(255,255,255,0.04);
+            }
+
+            .ranking-row td {
+                display: flex;
+                align-items: center;
+                padding: 0;
+                border-bottom: none;
+            }
+
+            /* first column: position badge */
+            .ranking-row td:first-child { width: 52px; min-width:52px; justify-content: center; }
+
+            /* player info expands and wraps */
+            .ranking-row td:nth-child(2) { flex: 1 1 auto; padding-left: 8px; }
+
+            /* achievements and points compacted on the right */
+            .ranking-row td:nth-child(4) { min-width: 72px; justify-content: center; }
+            .ranking-row td:nth-child(5) { min-width: 72px; justify-content: flex-end; }
+
+            /* smaller avatar + consistent spacing */
+            .player-avatar { width: 36px; height: 36px; }
+            .position-badge { width: 44px; height: 44px; font-size: 13px; border-radius: 10px; }
+
+            /* remove platform tags to reduce noise (already hiding 3rd col) */
+            .platform-tag { display: none; }
+
+            /* Filters and search should adapt */
+            .filter-section .flex { gap: 8px; }
+            .filter-section { padding: 14px; }
+            .search-input { max-width: 100%; }
+            /* ensure points text aligns visually to the right on small screens */
+            .ranking-row .total-points { text-align: right; }
         }
         /* Ajuste para garantir que o conteúdo não fique atrás da sidebar fixa */
         .main-content {
@@ -389,11 +447,12 @@
                     <div class="flex flex-wrap items-center justify-between gap-4">
                         <div class="flex items-center gap-2">
                             <span class="text-sm text-gray-400 mr-2">Filtros de Ranking</span>
-                            <button class="filter-btn active" data-filter="all"><i class="fas fa-trophy mr-2"></i>Todas</button>
-                            <button class="filter-btn" data-filter="psn"><i class="fab fa-playstation mr-2"></i>PSN</button>
-                            <button class="filter-btn" data-filter="xbox"><i class="fab fa-xbox mr-2"></i>XBOX</button>
-                            <button class="filter-btn" data-filter="steam"><i class="fab fa-steam mr-2"></i>STEAM</button>
-                            <button class="filter-btn" data-filter="retro"><i class="fas fa-gamepad mr-2"></i>RETRO ARCHVIMENTS</button>
+                            <!-- Icon-only filter buttons (labels removed to keep the UI compact) -->
+                            <button class="filter-btn active" data-filter="all" aria-label="Todas" title="Todas"><i class="fas fa-trophy"></i><span class="sr-only">Todas</span></button>
+                            <button class="filter-btn" data-filter="psn" aria-label="PSN" title="PSN"><i class="fab fa-playstation"></i><span class="sr-only">PSN</span></button>
+                            <button class="filter-btn" data-filter="xbox" aria-label="XBOX" title="XBOX"><i class="fab fa-xbox"></i><span class="sr-only">XBOX</span></button>
+                            <button class="filter-btn" data-filter="steam" aria-label="STEAM" title="STEAM"><i class="fab fa-steam"></i><span class="sr-only">STEAM</span></button>
+                            <button class="filter-btn" data-filter="retro" aria-label="RETRO" title="RETRO"><i class="fas fa-gamepad"></i><span class="sr-only">RETRO</span></button>
                         </div>
                         <div class="relative">
                             <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
