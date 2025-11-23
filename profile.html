@@ -90,7 +90,7 @@
                     </div>
 
                     <!-- Recently Played Game Card -->
-                    <div class="card p-0 lg:col-span-2 overflow-hidden">
+                    <div class="card p-0 lg:col-span-2 overflow-hidden recently-played-card">
                         <div class="relative h-48" style="background: linear-gradient(to bottom, rgba(15, 20, 25, 0.3), rgba(15, 20, 25, 0.95)), url('https://cdn.akamai.steamstatic.com/steam/apps/730/library_hero.jpg?t=1698860631') center/cover;">
                             <div class="absolute bottom-0 left-0 right-0 p-6">
                                 <div class="flex items-start space-x-4">
@@ -164,7 +164,8 @@
                              style="width: 10%; background-color: #D4A017;" 
                              title="RetroAchievements - 10%"></div>
                     </div>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                    <!-- Desktop: show names + percent in grid; hide on mobile -->
+                    <div class="hidden md:grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                         <div class="flex items-center space-x-2">
                             <div class="w-3 h-3 rounded-full" style="background-color: #0070CC;"></div>
                             <span class="text-xs text-gray-400">PlayStation <strong class="text-white">20%</strong></span>
@@ -182,35 +183,77 @@
                             <span class="text-xs text-gray-400">RetroAchievements <strong class="text-white">10%</strong></span>
                         </div>
                     </div>
+
+                    <!-- Mobile: icon-only circles; hidden on md+ -->
+                    <div class="platform-list flex items-center justify-between gap-4 mt-4 flex-wrap md:hidden">
+                        <div class="platform-item flex flex-col items-center text-center">
+                            <div class="platform-circle inline-flex items-center justify-center" style="background-color: #0070CC;">
+                                <i class="fab fa-playstation" aria-hidden="true"></i>
+                            </div>
+                            <span class="platform-percent text-xs text-gray-400 mt-2"><strong class="text-white">20%</strong></span>
+                        </div>
+                        <div class="platform-item flex flex-col items-center text-center">
+                            <div class="platform-circle inline-flex items-center justify-center" style="background-color: #107C10;">
+                                <i class="fab fa-xbox" aria-hidden="true"></i>
+                            </div>
+                            <span class="platform-percent text-xs text-gray-400 mt-2"><strong class="text-white">10%</strong></span>
+                        </div>
+                        <div class="platform-item flex flex-col items-center text-center">
+                            <div class="platform-circle inline-flex items-center justify-center" style="background-color: #66c0f4;">
+                                <i class="fab fa-steam" aria-hidden="true"></i>
+                            </div>
+                            <span class="platform-percent text-xs text-gray-400 mt-2"><strong class="text-white">60%</strong></span>
+                        </div>
+                        <div class="platform-item flex flex-col items-center text-center">
+                            <div class="platform-circle inline-flex items-center justify-center" style="background-color: #D4A017;">
+                                <i class="fas fa-gamepad" aria-hidden="true"></i>
+                            </div>
+                            <span class="platform-percent text-xs text-gray-400 mt-2"><strong class="text-white">10%</strong></span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Stats Section -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <!-- Conquistas -->
                     <div class="stat-card card p-6 text-center">
-                        <i class="fas fa-trophy trophy-icon text-4xl mb-3"></i>
-                        <h3 class="text-4xl font-bold mb-1">2,847</h3>
-                        <p class="text-gray-400 text-sm uppercase tracking-wide">Conquistas</p>
+                        <div class="stat-inner">
+                            <i class="fas fa-trophy trophy-icon stat-icon"></i>
+                            <div class="stat-content">
+                                <div class="stat-title text-gray-400 text-sm uppercase tracking-wide">Conquistas</div>
+                                <h3 class="stat-value text-4xl font-bold mb-1">2,847</h3>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Média de Conclusão -->
-                    <div class="stat-card card p-6 text-center">
-                        <i class="fas fa-gamepad controller-icon text-4xl mb-3"></i>
-                        <div class="flex items-center justify-center mb-1">
-                            <h3 class="text-4xl font-bold gradient-text">34</h3>
-                            <span class="text-2xl font-bold text-gray-400">%</span>
+                    <div class="stat-card card p-6 text-center has-progress">
+                        <div class="stat-inner">
+                            <i class="fas fa-gamepad controller-icon stat-icon"></i>
+                            <div class="stat-content">
+                                <div class="stat-title text-gray-400 text-sm uppercase tracking-wide">Média de Conclusão</div>
+                                <div class="stat-value flex items-center justify-start md:justify-center gap-2 mb-1">
+                                    <h3 class="text-4xl font-bold gradient-text">34</h3>
+                                    <span class="text-2xl font-bold text-gray-400">%</span>
+                                </div>
+                            </div>
                         </div>
-                        <p class="text-gray-400 text-sm uppercase tracking-wide mb-3">Média de Conclusão</p>
-                        <div class="progress-bar bg-gray-700 mx-auto" style="width: 80%;">
-                            <div class="progress-fill bg-gradient-to-r from-blue-500 to-blue-600" style="width: 34%;"></div>
+                        <div class="stat-progress mt-3 w-full">
+                            <div class="progress-bar bg-gray-700 mx-auto" style="width: 80%;">
+                                <div class="progress-fill bg-gradient-to-r from-blue-500 to-blue-600" style="width: 34%;"></div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Jogos Perfeitos -->
                     <div class="stat-card card p-6 text-center">
-                        <i class="fas fa-users users-icon text-4xl mb-3"></i>
-                        <h3 class="text-4xl font-bold mb-1">8</h3>
-                        <p class="text-gray-400 text-sm uppercase tracking-wide">Jogos Perfeitos</p>
+                        <div class="stat-inner">
+                            <i class="fas fa-users users-icon stat-icon"></i>
+                            <div class="stat-content">
+                                <div class="stat-title text-gray-400 text-sm uppercase tracking-wide">Jogos Perfeitos</div>
+                                <h3 class="stat-value text-4xl font-bold mb-1">8</h3>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -234,7 +277,37 @@
                     <!-- Game Rows -->
                     <div class="space-y-2 mt-2">
                         <!-- CS:GO -->
-                        <div class="game-row grid grid-cols-1 md:grid-cols-12 gap-4 p-4 rounded-lg items-center">
+                        <div class="mobile-game-card md:hidden p-3 rounded-lg mb-2 bg-transparent">
+                            <div class="mobile-top-row flex items-center gap-3">
+                                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=100&h=100&fit=crop" alt="CS:GO" class="w-12 h-12 rounded object-cover">
+                                <div class="mobile-meta flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <div class="mobile-title font-semibold text-base">CS:GO</div>
+                                        <div class="mobile-trophies text-sm flex items-center gap-2"><i class="fas fa-trophy text-yellow-400"></i><span class="font-semibold">142 / 167</span></div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div class="progress-bar bg-gray-700 rounded-full overflow-hidden h-2">
+                                            <div class="progress-fill bg-emerald-500" style="width:85%"></div>
+                                        </div>
+                                        <div class="flex items-center justify-between text-xs text-gray-400 mt-1">
+                                            <span>85%</span>
+                                            <span>2025-10-28</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mobile-meta-extra mt-2 text-xs text-gray-400 flex items-center justify-between gap-3">
+                                <div>
+                                    <div class="font-semibold">845h 12m</div>
+                                    <div class="text-xs text-gray-500">Total 845h 12m</div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="platform-badge inline-block px-3 py-1 rounded text-xs bg-blue-700/30">Steam</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="game-row hidden md:grid md:grid-cols-12 gap-4 p-4 rounded-lg items-center">
                             <div class="col-span-12 md:col-span-3 flex items-center space-x-3">
                                 <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=100&h=100&fit=crop" 
                                      alt="CS:GO" 
@@ -268,7 +341,37 @@
                         </div>
 
                         <!-- Valorant -->
-                        <div class="game-row grid grid-cols-1 md:grid-cols-12 gap-4 p-4 rounded-lg items-center">
+                        <div class="mobile-game-card md:hidden p-3 rounded-lg mb-2 bg-transparent">
+                            <div class="mobile-top-row flex items-center gap-3">
+                                <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=100&h=100&fit=crop" alt="Valorant" class="w-12 h-12 rounded object-cover">
+                                <div class="mobile-meta flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <div class="mobile-title font-semibold text-base">Valorant</div>
+                                        <div class="mobile-trophies text-sm flex items-center gap-2"><i class="fas fa-trophy text-yellow-400"></i><span class="font-semibold">31 / 50</span></div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div class="progress-bar bg-gray-700 rounded-full overflow-hidden h-2">
+                                            <div class="progress-fill bg-emerald-500" style="width:62%"></div>
+                                        </div>
+                                        <div class="flex items-center justify-between text-xs text-gray-400 mt-1">
+                                            <span>62%</span>
+                                            <span>2025-10-25</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mobile-meta-extra mt-2 text-xs text-gray-400 flex items-center justify-between gap-3">
+                                <div>
+                                    <div class="font-semibold">234h 45m</div>
+                                    <div class="text-xs text-gray-500">Total 234h 45m</div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="platform-badge inline-block px-3 py-1 rounded text-xs bg-blue-700/30">Steam</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="game-row hidden md:grid md:grid-cols-12 gap-4 p-4 rounded-lg items-center">
                             <div class="col-span-12 md:col-span-3 flex items-center space-x-3">
                                 <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=100&h=100&fit=crop" 
                                      alt="Valorant" 
@@ -302,7 +405,37 @@
                         </div>
 
                         <!-- Apex Legends -->
-                        <div class="game-row grid grid-cols-1 md:grid-cols-12 gap-4 p-4 rounded-lg items-center">
+                        <div class="mobile-game-card md:hidden p-3 rounded-lg mb-2 bg-transparent">
+                            <div class="mobile-top-row flex items-center gap-3">
+                                <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=100&h=100&fit=crop" alt="Apex Legends" class="w-12 h-12 rounded object-cover">
+                                <div class="mobile-meta flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <div class="mobile-title font-semibold text-base">Apex Legends</div>
+                                        <div class="mobile-trophies text-sm flex items-center gap-2"><i class="fas fa-trophy text-yellow-400"></i><span class="font-semibold">48 / 100</span></div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <div class="progress-bar bg-gray-700 rounded-full overflow-hidden h-2">
+                                            <div class="progress-fill bg-blue-500" style="width:48%"></div>
+                                        </div>
+                                        <div class="flex items-center justify-between text-xs text-gray-400 mt-1">
+                                            <span>48%</span>
+                                            <span>2025-10-20</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mobile-meta-extra mt-2 text-xs text-gray-400 flex items-center justify-between gap-3">
+                                <div>
+                                    <div class="font-semibold">156h 30m</div>
+                                    <div class="text-xs text-gray-500">Total 156h 30m</div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="platform-badge inline-block px-3 py-1 rounded text-xs bg-blue-700/30">Steam</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="game-row hidden md:grid md:grid-cols-12 gap-4 p-4 rounded-lg items-center">
                             <div class="col-span-12 md:col-span-3 flex items-center space-x-3">
                                 <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=100&h=100&fit=crop" 
                                      alt="Apex Legends" 
