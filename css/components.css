@@ -72,6 +72,14 @@
     transition: all 0.2s ease;
 }
 
+@media (max-width: 768px) {
+    /* Make recent games rows more compact on mobile */
+    .game-row { padding: 8px !important; gap: 8px !important; }
+    .game-row .game-thumbnail { width: 40px; height: 40px; }
+    .game-row .progress-bar { height: 4px; border-radius: 3px; }
+    .game-row .text-sm { font-size: 12px; }
+}
+
 .game-row:hover {
     background: rgba(96, 165, 250, 0.1);
     transform: translateX(4px);

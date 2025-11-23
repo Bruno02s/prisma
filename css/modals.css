@@ -27,6 +27,35 @@
     position: relative;
 }
 
+/* Ensure modals have a reliable bottom padding so action buttons don't sit flush
+   against the modal edge. This gives a consistent visual gap across desktop and
+   mobile and acts as a fallback when per-modal rules are missing. */
+.modal > div,
+.modal-content,
+.modal-inner--settings {
+    box-sizing: border-box;
+    padding-bottom: 28px; /* reasonable default gap under content */
+}
+
+/* Robust fallback: target any overlay/modal whose id ends with "Modal".
+   Many of our modals use id names like #editProfileModal, #pinAchievementsModal, etc.
+   This rule ensures all those overlays keep a safe bottom gap so buttons don't
+   sit flush to the rounded edge or screen safe-area. We use a safe-area inset
+   when available. */
+[id$="Modal"] > div,
+[id$="Modal"] .modal-content,
+[id$="Modal"] .modal-inner--settings {
+    padding-bottom: calc(env(safe-area-inset-bottom, 12px) + 20px) !important;
+    box-sizing: border-box;
+}
+
+/* If the last flex container inside a modal holds actions, ensure it has extra bottom margin
+   so buttons remain visually separated from the modal edge. This is a safe fallback
+   for modals that don't use a `.modal-actions` wrapper. */
+[id$="Modal"] .flex:last-child {
+    margin-bottom: calc(env(safe-area-inset-bottom, 6px) + 8px) !important;
+}
+
 /* Settings Styles */
 
 .settings-page {
